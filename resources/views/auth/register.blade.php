@@ -12,10 +12,10 @@
 
         {{-- LastName --}}
         <div class="mt-4">
-            <x-input-label for="lastName" :value="__('LastName')" />
-            <x-text-input id="lastName" class="block mt-1 w-full" type="text" name="lastName" :value="old('lastName')"
-                required autofocus autocomplete="lastName" />
-            <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
+            <x-input-label for="lastname" :value="__('LastName')" />
+            <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastName')"
+                required autofocus autocomplete="lastname" />
+            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
         </div>
 
 
@@ -29,10 +29,10 @@
 
         <!-- birthday -->
         <div class="mt-4">
-            <x-input-label for="birthday" :value="__('Birthday')" />
-            <x-text-input id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="old('birthday')"
-                required autofocus autocomplete="birthday" />
-            <x-input-error :messages="$errors->get('birthday')" class="mt-2" />
+            <x-input-label for="birthdate" :value="__('Birthdate')" />
+            <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')"
+                required autofocus autocomplete="birthdate" />
+            <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
         </div>
 
         <div class="mt-4">
