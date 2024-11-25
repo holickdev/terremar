@@ -4,3 +4,5 @@ if (document.getElementById("search-table") && typeof simpleDatatables.DataTable
         perPageSelect: false
     });
 }
+
+

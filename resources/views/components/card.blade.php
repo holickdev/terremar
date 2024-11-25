@@ -1,3 +1,6 @@
+@props(['title','price', 'bedrooms', 'bathrooms', 'parkings', 'area'])
+
+
 <div class="group relative tracking-wide">
     <div
         class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -15,13 +18,13 @@
             </h3>
             <span class="tracking-normal mt-1 text-sm text-gray-500 w-full flex justify-between">
                 <span class="inline-flex justify-between"><i class="mr-2 text-lg fa-solid fa-bed"></i>
-                    <p>{{$rooms}}</p>
+                    <p>{{$bedrooms}}</p>
                 </span>
                 <span class="inline-flex justify-between"><i class="mr-2 text-lg fa-solid fa-shower"></i>
-                    <p>{{$baths}}</p>
+                    <p>{{$bathrooms}}</p>
                 </span>
                 <span class="inline-flex justify-between"><i class="mr-2 text-lg fa-solid fa-car"></i>
-                    <p>{{$garage}}</p>
+                    <p>{{$parkings}}</p>
                 </span>
                 <span class="inline-flex justify-between"><i class="mr-2 text-lg fa-solid fa-ruler-combined"></i>
                     <p>{{$area}} m<sup>2</sup></p>

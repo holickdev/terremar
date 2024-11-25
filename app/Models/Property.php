@@ -22,6 +22,8 @@ class Property extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
+        'owner_id',
         'title',
         'description',
         'type',
@@ -31,6 +33,7 @@ class Property extends Model
         'bathrooms',
         'parkings',
         'captation_date',
+        'address_id'
     ];
 
     /**
@@ -39,8 +42,8 @@ class Property extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'price' => 'decimal:3',
-        'area' => 'decimal:3',
+        'price' => 'decimal:2',
+        'area' => 'decimal:2',
         'bedrooms' => 'integer',
         'bathrooms' => 'integer',
         'parkings' => 'integer',
@@ -52,7 +55,7 @@ class Property extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(Owner::class, 'owner_id');
+        return $this->belongsTo(Person::class, 'owner_id');
     }
 
     /**
@@ -60,6 +63,16 @@ class Property extends Model
      */
     public function address()
     {
-        return $this->belongsTo(Address::class, 'id_address_fk');
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
+    public function advisor_property()
+    {
+        return $this->hasMany(UserProperty::class, 'property_id');
+    }
+
+    public function advisors()
+    {
+        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'id', 'id', 'user_id');
     }
 }

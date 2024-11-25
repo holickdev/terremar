@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,9 +12,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
+Route::get('/faq', [FaqController::class, 'show'])->name('faq');
 
 Route::get('/about', function () {
     return view('about');
@@ -34,9 +34,7 @@ Route::get('/buy', function () {
     return view('services');
 })->name('buy');
 
-Route::get('/sell', function () {
-    return view('services');
-})->name('sell');
+Route::get('/sell', [PropertyController::class, 'show'])->name('sell');
 
 Route::get('/franchise', function () {
     return view('services');
@@ -52,4 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

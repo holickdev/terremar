@@ -1,55 +1,6 @@
 <!-- resources/views/home.blade.php -->
 @extends('layouts.app')
 
-
-@php
-    // $cantidad = 30;
-
-    $properties = [
-        [
-            'title' => 'Terreno en Venta - Playa Caribe',
-            'price' => '217.500',
-            'rooms' => 4,
-            'baths' => 3,
-            'garage' => 1,
-            'area' => '9.999.999,99'
-        ],
-        [
-            'title' => 'Casa en Venta - Pampatar',
-            'price' => '320.000',
-            'rooms' => 5,
-            'baths' => 4,
-            'garage' => 2,
-            'area' => '500'
-        ],
-        [
-            'title' => 'Apartamento en Venta - La Asunción',
-            'price' => '150.000',
-            'rooms' => 3,
-            'baths' => 2,
-            'garage' => 1,
-            'area' => '120'
-        ],
-        [
-            'title' => 'Finca en Venta - El Valle',
-            'price' => '450.000',
-            'rooms' => 6,
-            'baths' => 5,
-            'garage' => 3,
-            'area' => '1200'
-        ],
-        [
-            'title' => 'Terreno en Venta - Costa Azul',
-            'price' => '290.000',
-            'rooms' => 0,
-            'baths' => 0,
-            'garage' => 0,
-            'area' => '2000'
-        ],
-        // Agrega más propiedades aquí si es necesario
-    ];
-@endphp
-
 @section('content')
     <!--
           This example requires some changes to your config:
@@ -77,12 +28,12 @@
 
                 @foreach ($properties as $property)
                     <x-card
-                        :title="$property['title']"
-                        :price="$property['price']"
-                        :rooms="$property['rooms']"
-                        :baths="$property['baths']"
-                        :garage="$property['garage']"
-                        :area="$property['area']"
+                        :title="$property->title"
+                        :price="$property->price"
+                        :bedrooms="$property->bedrooms"
+                        :bathrooms="$property->bathrooms"
+                        :parkings="$property->parkings"
+                        :area="$property->area"
                     ></x-card>
                 @endforeach
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Person;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -35,14 +36,22 @@ class RegisteredUserController extends Controller
             'gender' => ['required', 'string', 'max:255'],
             'birthdate' => ['required', 'date'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone' => ['required', 'string', 'lowercase', 'string', 'max:20', 'unique:'.Person::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $person = Person::create([
+            'identification' => $request->identification,
             'name' => $request->name,
             'lastname' => $request->lastname,
             'gender' => $request->gender,
             'birthdate' => $request->birthdate,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        $user = User::create([
+            'person_id' => $person->id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

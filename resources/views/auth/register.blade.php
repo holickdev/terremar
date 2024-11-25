@@ -1,6 +1,13 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form class="" method="POST" action="{{ route('register') }}">
         @csrf
+
+        <div>
+            <x-input-label for="identification" :value="__('Cédula')" />
+            <x-text-input id="identification" class="block mt-1 w-full" type="text" name="identification" :value="old('identification')" required
+                autofocus autocomplete="identification" />
+            <x-input-error :messages="$errors->get('identification')" class="mt-2" />
+        </div>
 
         <!-- Name -->
         <div>
@@ -18,13 +25,20 @@
             <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
         </div>
 
-
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('Phone')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')"
+                required autocomplete="phone" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
         <!-- birthday -->
@@ -34,6 +48,7 @@
                 required autofocus autocomplete="birthdate" />
             <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
         </div>
+
 
         <div class="mt-4">
             <x-input-label for="gender" :value="__('Gender')" />

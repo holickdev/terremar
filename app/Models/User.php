@@ -18,10 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'lastname',
-        'gender',
-        'birthdate',
+        'person_id',
         'email',
         'role',
         'password',
@@ -48,5 +45,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    public function property_users()
+    {
+        return $this->hasMany(UserProperty::class, 'user_id');
+    }
+
+    public function faq()
+    {
+        return $this->hasMany(Faq::class, 'user_id');
+    }
+
+    public function properties()
+    {
+        return $this->hasManyThrough(Property::class, UserProperty::class, 'user_id', 'id', 'id', 'property_id');
     }
 }

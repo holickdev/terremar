@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\DashboardController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -37,9 +38,19 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/dashboard/faq', [DashboardController::class, 'faq'])->name('faq_dash');
+
     Route::get('/dashboard/properties', [DashboardController::class, 'properties'])->name('properties');
-    Route::get('/dashboard/add/property', [DashboardController::class, 'newProperty'])->name('new_property');
+    Route::get('/dashboard/properties/add', [DashboardController::class, 'newProperty'])->name('new_property');
+    Route::post('/property/store', [PropertyController::class, 'store'])->name('store_property');
+
+    Route::get('/dashboard/advisors', [DashboardController::class, 'advisors'])->name('advisors');
+    Route::get('/dashboard/owners', [DashboardController::class, 'owners'])->name('owners');
+
+    Route::get('/dashboard/bdd/property', [DashboardController::class, 'mewProperty'])->name('mew_property');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

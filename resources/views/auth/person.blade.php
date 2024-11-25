@@ -10,7 +10,7 @@
         <tr>
             <th>
                 <span class="flex items-center">
-                    Titulo
+                    Cedula
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -18,7 +18,7 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Tipo
+                    Nombre
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -26,7 +26,7 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Area
+                    Apellido
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -34,7 +34,7 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Precio
+                    Correo
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -42,7 +42,7 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Habitaciones
+                    Télefono
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -50,7 +50,7 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Baños
+                    Casas
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -58,15 +58,23 @@
             </th>
             <th>
                 <span class="flex items-center">
-                    Estacionamientos
+                    Apartamentos
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
                 </span>
             </th>
-            <th data-type="date" data-format="YYYY/DD/MM">
+            <th>
                 <span class="flex items-center">
-                    Fecha de Captacion
+                    Terrenos
+                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                    </svg>
+                </span>
+            </th>
+            <th>
+                <span class="flex items-center">
+                    Otros
                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                     </svg>
@@ -75,16 +83,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($properties as $property)
+        @foreach ($advisors as $advisor)
+        {{-- @php $advisor = $advisor->person @endphp --}}
             <tr>
-                <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$property->title}}</td>
-                <td>{{$property->type}}</td>
-                <td>{{$property->price}}</td>
-                <td>{{$property->area}}</td>
-                <td>{{$property->bedrooms}}</td>
-                <td>{{$property->bathrooms}}</td>
-                <td>{{$property->parkings}}</td>
-                <td>{{$property->captation_date}}</td>
+                <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$advisor->identification}}</td>
+                <td>{{$advisor->name}}</td>
+                <td>{{$advisor->lastname}}</td>
+                <td>{{$advisor->email}}</td>
+                <td>{{$advisor->phone}}</td>
+                <td>{{$advisor->houses}}</td>
+                <td>{{$advisor->apartaments}}</td>
+                <td>{{$advisor->terrains}}</td>
+                <td>{{$advisor->others}}</td>
             </tr>
         @endforeach
     </tbody>

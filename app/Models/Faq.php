@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Faq extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,10 @@ class Address extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'state',
-        'municipality',
-        'parish',
-        'point_reference',
+        'id',
+        'question',
+        'anwser',
+        'user_id',
     ];
 
     /**
@@ -41,5 +41,10 @@ class Address extends Model
             // Si tienes algún campo que necesite conversión, puedes definirlo aquí
             // Por ejemplo, si tuvieras algún campo datetime o booleano
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

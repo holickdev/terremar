@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Owner;
+use App\Models\Faq;
 use Illuminate\Http\Request;
 
-class OwnerController extends Controller
+class FaqController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,15 +34,15 @@ class OwnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Owner $Owner)
+    public function show(Faq $Faq)
     {
-        //
+        $faq = Faq::all();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Owner $Owner)
+    public function edit(Faq $Faq)
     {
         //
     }
@@ -50,7 +50,7 @@ class OwnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Owner $Owner)
+    public function update(Request $request, Faq $Faq)
     {
         //
     }
@@ -58,7 +58,7 @@ class OwnerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Owner $Owner)
+    public function destroy(Faq $Faq)
     {
         //
     }

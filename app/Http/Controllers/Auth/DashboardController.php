@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+
 use App\Models\User; // Ejemplo de modelo para obtener usuarios activos
+use App\Models\Person; // Ejemplo de modelo para obtener usuarios activos
+
 use App\Models\Property; // Ejemplo de modelo para obtener usuarios activos
 
 class DashboardController extends Controller
@@ -22,17 +25,84 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function properties(){
+    public function properties()
+    {
 
         $properties = Property::all();
+
+        // foreach ($properties as $property){
+        //     echo json_encode($property->owner);
+        // }
 
         return view('auth.properties', [
             'properties' => $properties
         ]);
     }
 
-    public function newProperty(){
-        return view('auth.addproperty');
+    public function faq(){
+        return view('auth.faq');
     }
 
+    public function advisors()
+    {
+        $advisors = DashboardController::getAdvisors();
+
+        return view('auth.advisors', [
+            'advisors' => $advisors
+        ]);
+    }
+
+    public function owners()
+    {
+        $owners = DashboardController::getOwners();
+
+        return view('auth.owners', [
+            'owners' => $owners
+        ]);
+    }
+
+    public function newProperty(){
+
+        $advisors = DashboardController::getAdvisors();
+
+        return view('auth.addproperty', [
+            'advisors' => $advisors
+        ]);
+    }
+
+    private static function getAdvisors(){
+        return User::with('person')->
+        withCount([
+            'properties as houses' => function ($query) {
+                $query->where('type', 'Casa');
+            },
+            'properties as apartments' => function ($query) {
+                $query->where('type', 'Apartamento');
+            },
+            'properties as terrains' => function ($query) {
+                $query->where('type','Terreno' );
+            },
+            'properties as others' => function ($query) {
+                $query->where('type','Others' );
+            },
+        ])->get();
+    }
+
+    private static function getOwners(){
+        return Person::doesntHave('User')->
+        withCount([
+            'properties as houses' => function ($query) {
+                $query->where('type', 'Casa');
+            },
+            'properties as apartments' => function ($query) {
+                $query->where('type', 'Apartamento');
+            },
+            'properties as terrains' => function ($query) {
+                $query->where('type','Terreno' );
+            },
+            'properties as others' => function ($query) {
+                $query->where('type','Others' );
+            },
+        ])->get();
+    }
 }
