@@ -12,7 +12,11 @@ class FaqController extends Controller
      */
     public function index()
     {
-        //
+        $faq = Faq::all();
+
+        return view('faq', [
+            'faq' => $faq
+        ]);
     }
 
     /**
@@ -36,7 +40,7 @@ class FaqController extends Controller
      */
     public function show(Faq $Faq)
     {
-        $faq = Faq::all();
+
     }
 
     /**

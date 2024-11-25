@@ -171,8 +171,8 @@
         </section>
         <!-- Page Content -->
         <main>
-            <div class="p-4 sm:ml-64">
-                <div class="p-4 rounded-lg dark:border-gray-700">
+            <div class=" sm:ml-64">
+                <div class=" rounded-lg dark:border-gray-700">
 
                     @yield('content')
 

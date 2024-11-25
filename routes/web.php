@@ -12,7 +12,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/faq', [FaqController::class, 'show'])->name('faq');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 
 Route::get('/about', function () {
     return view('about');

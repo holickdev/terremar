@@ -9,6 +9,8 @@ class Faq extends Model
 {
     use HasFactory;
 
+    protected $table = 'faq';
+
     /**
      * The attributes that are mass assignable.
      *

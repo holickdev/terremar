@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User; // Ejemplo de modelo para obtener usuarios activos
 use App\Models\Person; // Ejemplo de modelo para obtener usuarios activos
+use App\Models\Faq; // Ejemplo de modelo para obtener usuarios activos
 
 use App\Models\Property; // Ejemplo de modelo para obtener usuarios activos
 
@@ -39,8 +40,24 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function products()
+    {
+
+        $properties = Property::all();
+
+        // foreach ($properties as $property){
+        //     echo json_encode($property->owner);
+        // }
+
+        return view('auth.products', [
+            'properties' => $properties
+        ]);
+    }
+
     public function faq(){
-        return view('auth.faq');
+        $faq = Faq::all();
+
+        return view('auth.faq',['faq'=> $faq]);
     }
 
     public function advisors()

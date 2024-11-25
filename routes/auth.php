@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/faq', [DashboardController::class, 'faq'])->name('faq_dash');
 
+    Route::get('/dashboard/products', [DashboardController::class, 'products'])->name('products');
     Route::get('/dashboard/properties', [DashboardController::class, 'properties'])->name('properties');
     Route::get('/dashboard/properties/add', [DashboardController::class, 'newProperty'])->name('new_property');
     Route::post('/property/store', [PropertyController::class, 'store'])->name('store_property');
