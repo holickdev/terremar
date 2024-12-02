@@ -5,6 +5,8 @@
 
 @section('content')
 
+<x-crud-header :title="$title" :action="$action"/>
+
 <table id="search-table">
     <thead>
         <tr>

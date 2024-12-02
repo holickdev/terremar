@@ -36,7 +36,9 @@ class DashboardController extends Controller
         // }
 
         return view('auth.properties', [
-            'properties' => $properties
+            'properties' => $properties,
+            'title' => "Todas las Propiedades",
+            'action' => "Agregar Propiedad"
         ]);
     }
 
@@ -54,10 +56,11 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function faq(){
+    public function faq()
+    {
         $faq = Faq::all();
 
-        return view('auth.faq',['faq'=> $faq]);
+        return view('auth.faq', ['faq' => $faq]);
     }
 
     public function advisors()
@@ -65,7 +68,9 @@ class DashboardController extends Controller
         $advisors = DashboardController::getAdvisors();
 
         return view('auth.advisors', [
-            'advisors' => $advisors
+            'advisors' => $advisors,
+            'title' => "Todas los Asesores",
+            'action' => "Agregar Asesor"
         ]);
     }
 
@@ -74,11 +79,14 @@ class DashboardController extends Controller
         $owners = DashboardController::getOwners();
 
         return view('auth.owners', [
-            'owners' => $owners
+            'owners' => $owners,
+            'title' => "Todos los Propietarios",
+            'action' => "Agregar Propietario"
         ]);
     }
 
-    public function newProperty(){
+    public function newProperty()
+    {
 
         $advisors = DashboardController::getAdvisors();
 
@@ -87,39 +95,39 @@ class DashboardController extends Controller
         ]);
     }
 
-    private static function getAdvisors(){
-        return User::with('person')->
-        withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type','Terreno' );
-            },
-            'properties as others' => function ($query) {
-                $query->where('type','Others' );
-            },
-        ])->get();
+    private static function getAdvisors()
+    {
+        return User::with('person')->withCount([
+                'properties as houses' => function ($query) {
+                    $query->where('type', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->where('type', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->where('type', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->where('type', 'Others');
+                },
+            ])->get();
     }
 
-    private static function getOwners(){
-        return Person::doesntHave('User')->
-        withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type','Terreno' );
-            },
-            'properties as others' => function ($query) {
-                $query->where('type','Others' );
-            },
-        ])->get();
+    private static function getOwners()
+    {
+        return Person::doesntHave('User')->withCount([
+                'properties as houses' => function ($query) {
+                    $query->where('type', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->where('type', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->where('type', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->where('type', 'Others');
+                },
+            ])->get();
     }
 }

@@ -18,7 +18,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return Property::all();
+        $properties = Property::all();
+        return view('services',[ 'properties' => $properties ]);
     }
 
     /**
@@ -249,12 +250,12 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function show($id)
     {
-        $properties = Property::all();
+        $property = Property::find($id);
 
-        return view('services', [
-            'properties' => $properties
+        return view('products', [
+            'property' => $property
         ]);
     }
 

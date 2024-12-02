@@ -1,7 +1,6 @@
-<!-- resources/views/home.blade.php -->
 @extends('layouts.app')
 
-@section('title', 'WF1') <!-- Opcional: si quisieras personalizar el título en el head -->
+@section('title', 'WF1')
 
 @section('content')
 

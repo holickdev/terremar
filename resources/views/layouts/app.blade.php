@@ -19,6 +19,10 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+
+    <link href="{{ asset('css/library/leaflet.css') }}" rel="stylesheet" />
+    <script src="{{ asset('js/library/leaflet.js') }}"></script>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -71,10 +75,10 @@
 
                                     <!-- Link a Servicios -->
                                     <x-dropdown :options="[
-                                        ['label' => 'Alquiler', 'url' => route('rent')],
-                                        ['label' => 'Compra', 'url' => route('buy')],
-                                        ['label' => 'Venta', 'url' => route('sell')],
-                                        ['label' => 'Franquicia', 'url' => route('franchise')],
+                                        ['label' => 'Alquiler', 'url' => route('property')],
+                                        ['label' => 'Compra', 'url' => route('property')],
+                                        ['label' => 'Venta', 'url' => route('property')],
+                                        ['label' => 'Franquicia', 'url' => route('property')],
                                     ]">
                                         Servicios
                                     </x-dropdown>
@@ -120,7 +124,7 @@
                                 ['url' => route('login'), 'label' => 'Login'],
                                 ['url' => route('register'), 'label' => 'Register'],
                             ]"
-                                icon="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+                                icon="{{asset('img/Arnoldo.jpg')}}">
                                 <x-slot name="extra">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
@@ -161,9 +165,9 @@
         </main>
 
         <!-- Page Footing -->
-        <footer>
+        <footer class="bg-white w-full">
 
-            <div class="mx-auto container py-16 xl:px-20 lg:px-12 sm:px-6 px-4">
+            <div class=" mx-auto container py-16 xl:px-20 lg:px-12 sm:px-6 px-4">
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 gap-4">
                     <div class="flex flex-col flex-shrink-0">
                         <div class="">

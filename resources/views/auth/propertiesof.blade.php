@@ -4,7 +4,7 @@
 
 @section('content')
     <section>
-        <x-crud-header :title="$title" :action="$action"/>
+        <x-crud-header :title="$title" :action="'Agregar Propiedad'"/>
         <table id="search-table" >
             <thead class="bg-white dark:bg-gray-700">
                 <tr class="flex">

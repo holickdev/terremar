@@ -22,13 +22,18 @@ Route::get('/services', function () {
     return view('services');
 })->name('services');
 
+Route::get('/products', function () {
+    return view('products');
+})->name('product');
+
+Route::get('/property', [PropertyController::class, 'index'])->name('property');
+Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
+
 Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 
-Route::get('/rent', function () {
-    return view('services');
-})->name('rent');
+
 
 Route::get('/buy', function () {
     return view('services');
