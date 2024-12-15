@@ -10,18 +10,17 @@
             <h1 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 text-center">Propiedades en Venta</h1>
 
             <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+
                 @foreach ($properties as $property)
-                    <a href="/property/{{$property->id}}">
-                        <x-card
-                            :id="$property->id"
-                            :title="$property->title"
-                            :price="$property->price"
-                            :bedrooms="$property->bedrooms"
-                            :bathrooms="$property->bathrooms"
-                            :parkings="$property->parkings"
-                            :area="$property->area"
-                        ></x-card>
-                    </a>
+                    <x-card
+                        :id="$property->id"
+                        :title="$property->title"
+                        :price="$property->price"
+                        :bedrooms="$property->bedrooms"
+                        :bathrooms="$property->bathrooms"
+                        :parkings="$property->parkings"
+                        :area="$property->area"
+                    ></x-card>
                 @endforeach
 
             </div>

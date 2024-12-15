@@ -50,6 +50,27 @@ class Property extends Model
         'captation_date' => 'date',
     ];
 
+    public static function counter()
+    {
+        return Property::selectRaw("
+            COUNT(*) AS total,
+            COUNT(CASE WHEN type = 'Casa' THEN 1 END) AS houses,
+            COUNT(CASE WHEN type = 'Apartamento' THEN 1 END) AS apartments,
+            COUNT(CASE WHEN type = 'Terreno' THEN 1 END) AS terrains,
+            COUNT(CASE WHEN type NOT IN ('Casa', 'Apartamento', 'Terreno') THEN 1 END) AS others
+        ")->first();
+    }
+
+    public static function percent()
+    {
+        return Property::selectRaw("
+            COUNT(*) AS total,
+            COUNT(CASE WHEN captation_end >= CURDATE() THEN 1 END) AS captated,
+            COUNT(CASE WHEN captation_end < CURDATE() THEN 1 END) AS discaptated,
+            COUNT(CASE WHEN captation_end is NULL THEN 1 END) AS uncaptated
+        ")->first();
+    }
+
     /**
      * Relationship with Owner model.
      */

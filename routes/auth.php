@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/properties', [DashboardController::class, 'properties'])->name('properties');
     Route::get('/dashboard/properties/add', [DashboardController::class, 'newProperty'])->name('new_property');
     Route::post('/property/store', [PropertyController::class, 'store'])->name('store_property');
+    Route::post('/property/percent/', [PropertyController::class, 'percent'])->name('property_percent');
 
     Route::get('/dashboard/advisors', [DashboardController::class, 'advisors'])->name('advisors');
     Route::get('/dashboard/owners', [DashboardController::class, 'owners'])->name('owners');

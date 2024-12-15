@@ -18,12 +18,11 @@ class DashboardController extends Controller
     public function index()
     {
         // Lógica para obtener datos (ejemplo de usuarios activos y total de ingresos)
-        $activeUsers = User::all(); // Contar usuarios activos
+        $count = Property::counter(); // Contar usuarios activos
+        $percent = Property::percent(); // Contar usuarios activos
 
         // Retornar la vista del dashboard con los datos
-        return view('auth.dashboard', [
-            'activeUsers' => $activeUsers
-        ]);
+        return view('auth.dashboard', compact('count','percent'));
     }
 
     public function properties()

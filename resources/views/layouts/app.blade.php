@@ -22,6 +22,7 @@
 
     <link href="{{ asset('css/library/leaflet.css') }}" rel="stylesheet" />
     <script src="{{ asset('js/library/leaflet.js') }}"></script>
+    <script src="{{ asset('js/library/flowbite.js') }}"></script>
 
 </head>
 
