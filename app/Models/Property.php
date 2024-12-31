@@ -27,12 +27,15 @@ class Property extends Model
         'title',
         'description',
         'type',
+        'trade',
+        'social_class',
         'price',
         'area',
         'bedrooms',
         'bathrooms',
         'parkings',
-        'captation_date',
+        'captation_start',
+        'captation_end',
         'address_id'
     ];
 
@@ -71,6 +74,17 @@ class Property extends Model
         ")->first();
     }
 
+    public static function liquid()
+    {
+        return Property::selectRaw("
+            SUM(CASE WHEN type = 'Casa' THEN price ELSE 0 END) AS houses,
+            SUM(CASE WHEN type = 'Apartamento' THEN price ELSE 0 END) AS apartments,
+            SUM(CASE WHEN type = 'Terreno' THEN price ELSE 0 END) AS terrains,
+            SUM(CASE WHEN type NOT IN ('Casa', 'Apartamento', 'Terreno') THEN price ELSE 0 END) AS others
+        ")->first();
+    }
+
+
     /**
      * Relationship with Owner model.
      */
@@ -92,8 +106,13 @@ class Property extends Model
         return $this->hasMany(UserProperty::class, 'property_id');
     }
 
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'property_id');
+    }
+
     public function advisors()
     {
-        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'id', 'id', 'user_id');
+        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'user_id', 'id', '');
     }
 }

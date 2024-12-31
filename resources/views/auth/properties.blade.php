@@ -110,7 +110,7 @@
                         <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="">{{ $property->parkings }}</td> </a>
                         <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a href="">{{ $property->captation_start }}</td> </a>
+                            <a href="">{{ $property->captation_start }} - {{ $property->captation_end }}</td> </a>
                         {{-- <td class="p-2 space-x-2 whitespace-nowrap">
                             <button type="button" id="updateProductButton"
                                 data-drawer-target="drawer-update-product-default"

@@ -42,4 +42,11 @@ class Address extends Model
             // Por ejemplo, si tuvieras algún campo datetime o booleano
         ];
     }
+
+    public function address()
+    {
+        return $this->hasMany(Property::class, 'id');
+    }
+
+
 }

@@ -47,6 +47,20 @@ class User extends Authenticatable
         ];
     }
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_GERENTE = 'gerente';
+    const ROLE_USER = 'user';
+
+    public function isAdmin()
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isGerente()
+    {
+        return $this->role === self::ROLE_GERENTE;
+    }
+
     public function person()
     {
         return $this->belongsTo(Person::class);
@@ -66,4 +80,5 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Property::class, UserProperty::class, 'user_id', 'id', 'id', 'property_id');
     }
+
 }

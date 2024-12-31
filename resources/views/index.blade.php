@@ -7,14 +7,12 @@
     <div>
 
         <div class="relative overflow-hidden bg-white">
-            <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-                <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-                    <div class="sm:max-w-lg">
-                        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Summer styles are finally
-                            here
-                        </h1>
-                        <p class="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the
-                            harsh elements of a world that doesn't care if you live or die.</p>
+            <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-30">
+                <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-4 lg:px-6">
+                    <div class="sm:max-w-xl">
+                        <h1 class="text-xl font-bold tracking-tight text-gray-900 sm:text-6xl">Inmuebles ideales para cada etapa<br>de tu vida</h1>
+                        <p class="mt-10 text-xl text-gray-500">Adquiere un inmueble de forma cómoda y segura con Terremar.
+                            ¿Que esperas para hacer tu próxima gran inversión?</p>
                     </div>
                     <div>
                         <div class="mt-10">
@@ -62,9 +60,8 @@
                                 </div>
                             </div>
 
-                            <a href="#"
-                                class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">Shop
-                                Collection</a>
+                            <a href="{{route('property')}}"
+                                class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-bold text-center font-large text-white hover:bg-indigo-700">Ver Ofertas</a>
                         </div>
                     </div>
                 </div>
@@ -73,10 +70,10 @@
         <div class="bg-gray-900 text-white py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
-                    <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight  sm:text-5xl lg:text-balance">
-                        Todo lo que necesitas para encontrar tu inmueble ideal</p>
-                    <p class="mt-6 text-lg/8 text-gray-400">Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
-                        Suspendisse eget egestas a elementumt. In mi viverra nunc.</p>
+                    <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight sm:text-5xl lg:text-balance">
+                        Encuentra el lugar donde comienza tu historia</p>
+                    <p class="mt-6 text-lg/8 text-gray-400">Descubre propiedades que se ajustan a tus necesidades. Ya sea para tu
+                        hogar o inversión, estamos aquí para ayudarte a tomar la mejor decisión.</p>
                 </div>
                 <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                     <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
@@ -87,14 +84,13 @@
                                     <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                         stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+                                            d="M8.25 13.5l3.75-3.75 3.75 3.75M12 6.75v10.5" />
                                     </svg>
                                 </div>
-                                Push to deploy
+                                Compra con confianza
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Morbi viverra dui mi arcu sed. Tellus semper
-                                adipiscing
-                                suspendisse semper morbi. Odio urna massa nunc massa.</dd>
+                            <dd class="mt-2 text-base/7 text-gray-400">Ofrecemos asesoramiento profesional para ayudarte a
+                                encontrar la propiedad que mejor se adapte a tu estilo de vida y presupuesto.</dd>
                         </div>
                         <div class="relative pl-16">
                             <dt class="text-base/7 font-semibold text-gray-200">
@@ -103,14 +99,13 @@
                                     <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                         stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                            d="M3.75 4.5l8.25 8.25 8.25-8.25M12 3v18" />
                                     </svg>
                                 </div>
-                                SSL certificates
+                                Propiedades verificadas
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Sit quis amet rutrum tellus ullamcorper ultricies
-                                libero
-                                dolor eget. Sem sodales gravida quam turpis enim lacus amet.</dd>
+                            <dd class="mt-2 text-base/7 text-gray-400">Cada inmueble es revisado cuidadosamente para garantizar
+                                la transparencia y calidad en cada transacción.</dd>
                         </div>
                         <div class="relative pl-16">
                             <dt class="text-base/7 font-semibold text-gray-200">
@@ -119,14 +114,13 @@
                                     <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                         stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                            d="M12 8.25l4.5 4.5H7.5l4.5-4.5z" />
                                     </svg>
                                 </div>
-                                Simple queues
+                                Asesoramiento personalizado
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Quisque est vel vulputate cursus. Risus proin diam
-                                nunc
-                                commodo. Lobortis auctor congue commodo diam neque.</dd>
+                            <dd class="mt-2 text-base/7 text-gray-400">Nuestro equipo está listo para brindarte el mejor soporte
+                                en cada paso del proceso, desde la búsqueda hasta el cierre.</dd>
                         </div>
                         <div class="relative pl-16">
                             <dt class="text-base/7 font-semibold text-gray-200">
@@ -135,18 +129,19 @@
                                     <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                         stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+                                            d="M12 4.5V19.5M6.75 15.75L12 10.5l5.25 5.25" />
                                     </svg>
                                 </div>
-                                Advanced security
+                                Soluciones rápidas
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Arcu egestas dolor vel iaculis in ipsum mauris.
-                                Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.</dd>
+                            <dd class="mt-2 text-base/7 text-gray-400">Te ayudamos a resolver trámites legales y financieros
+                                para que tengas una experiencia sin complicaciones.</dd>
                         </div>
                     </dl>
                 </div>
             </div>
         </div>
+
         <!--
           This example requires some changes to your config:
 
