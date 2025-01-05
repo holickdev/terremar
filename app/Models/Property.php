@@ -113,6 +113,6 @@ class Property extends Model
 
     public function advisors()
     {
-        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'user_id', 'id', '');
+        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'id', 'id', 'user_id');
     }
 }

@@ -4,10 +4,14 @@ namespace App\Policies;
 
 use App\Models\Property;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class PropertyPolicy
 {
+
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -23,7 +27,7 @@ class PropertyPolicy
     public function view(User $user, Property $property)
     {
         // Verificar si el usuario está asociado a la propiedad a través de la relación muchos a muchos
-        return $property->users->contains($user)
+        return $property->advisors->contains($user)
             ? Response::allow()
             : Response::deny('No tienes acceso a esta propiedad.');
     }
@@ -52,7 +56,7 @@ class PropertyPolicy
     public function delete(User $user, Property $property): bool
     {
         // Permitir la eliminación solo si el usuario es el propietario de la propiedad o un administrador
-        return $property->users->contains($user) || $user->isGerente() || $user->isAdmin();
+        return $property->users->contains($user);
     }
 
     /**

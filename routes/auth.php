@@ -62,19 +62,20 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/upload-image', [ImageUploadController::class, 'store'])->name('upload.image');
 
-    Route::get('/dashboard/products', [DashboardController::class, 'products'])->name('products');
+    // Route::get('/dashboard/products', [DashboardController::class, 'products'])->name('products');
+
     Route::get('/dashboard/properties', [DashboardController::class, 'properties'])->name('properties');
     Route::get('/dashboard/properties/add', [DashboardController::class, 'newProperty'])->name('new_property');
     Route::get('/dashboard/properties/view/{id}', [DashboardController::class, 'property'])->name('view_property');
     Route::get('/dashboard/properties/edit/{id}', [PropertyController::class, 'edit'])->name('edit_property');
-    Route::put('/property/update/{id}', [PropertyController::class, 'update'])->name('update_property');
+
     Route::post('/property/store', [PropertyController::class, 'store'])->name('store_property');
+    Route::put('/property/update/{id}', [PropertyController::class, 'update'])->name('update_property');
+    Route::delete('/property/delete/{id}', [PropertyController::class, 'edit'])->name('edit_property');
     Route::post('/property/percent/', [PropertyController::class, 'percent'])->name('property_percent');
 
     Route::get('/dashboard/advisors', [DashboardController::class, 'advisors'])->name('advisors');
     Route::get('/dashboard/owners', [DashboardController::class, 'owners'])->name('owners');
-
-    Route::get('/dashboard/bdd/property', [DashboardController::class, 'mewProperty'])->name('mew_property');
 
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');

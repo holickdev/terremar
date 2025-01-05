@@ -222,9 +222,8 @@
     @if (session('success'))
         <x-modal-crud :message="session('success')" />
         <script src="{{ asset('js/custom/modal.js') }}"></script>
-    @endif
-    @if (session('error'))
-        <x-modal-crud :message="session('success')" />
+    @elseif (session('error'))
+        <x-modal-crud :message="session('error')" />
         <script src="{{ asset('js/custom/modal.js') }}"></script>
     @endif
 

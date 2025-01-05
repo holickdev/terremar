@@ -12,17 +12,25 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PropertyController extends Controller
 {
+
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $properties = Property::Paginate(8);
+        $query = Property::query();
+
+        // if (!empty($type)) {
+        //     $query->where('type', $type);
+        // }
+
+        $properties = $query->paginate(8);
         return view('services', ['properties' => $properties]);
     }
 
@@ -280,9 +288,7 @@ class PropertyController extends Controller
 
                 // 6. Subir los archivos multimedia
                 if ($request->hasFile('media')) {
-                    print("true");
                     foreach ($request->file('media') as $file) {
-                        print("a");
                         $url = $file->store('media', 'public'); // Almacena en storage/app/public/media
                         Media::create([
                             'property_id' => $property->id,
@@ -311,7 +317,7 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        $property = Property::find($id);
+        $property = Property::with('media')->find($id);
 
         if ($property && $property->address) {
             $similars = Property::whereHas('address', function ($query) use ($property) {
@@ -325,18 +331,10 @@ class PropertyController extends Controller
             $similars = collect(); // Devuelve una colección vacía si no se encuentra la propiedad o dirección
         }
 
-
-
         return view('products', [
             'property' => $property,
             'similars' => $similars
         ]);
-
-        // foreach($property->advisors as $advisor){
-        //     echo json_encode($advisor->person);
-        // }
-
-        // return 1;
     }
 
     /**
@@ -430,9 +428,15 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Property $property)
+    public function destroy($id)
     {
-        //
+        $property = Property::findOrFail($id);
+    
+        // Autorizar la acción de ver la propiedad
+        $this->authorize('delete', $property);
+    
+        // Retornar la vista con la propiedad cargada
+        return view('auth.property-delete', compact('property'));
     }
 
     public function counter()

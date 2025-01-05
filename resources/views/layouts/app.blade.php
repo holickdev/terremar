@@ -20,8 +20,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
-    <link href="{{ asset('css/library/leaflet.css') }}" rel="stylesheet" />
-    <script src="{{ asset('js/library/leaflet.js') }}"></script>
+    @stack('style') <!-- Aquí se colocarán los estilos añadidos con '@-push('styles')' -->
+    @stack('script') <!-- Aquí se colocarán los scripts añadidos con @-push('scripts') -->
+
     <script src="{{ asset('js/library/flowbite.js') }}"></script>
 
 </head>
@@ -74,10 +75,9 @@
 
                                     <!-- Link a Servicios -->
                                     <x-dropdown :options="[
-                                        ['label' => 'Alquiler', 'url' => route('property')],
-                                        ['label' => 'Compra', 'url' => route('property')],
-                                        ['label' => 'Venta', 'url' => route('property')],
-                                        ['label' => 'Franquicia', 'url' => route('property')],
+                                        ['label' => 'Todas', 'url' => route('property')],
+                                        ['label' => 'Casas', 'url' => route('property','Casa')],
+                                        ['label' => 'Departamentos', 'url' => route('property','Apartamento')],
                                     ]">
                                         Servicios
                                     </x-dropdown>

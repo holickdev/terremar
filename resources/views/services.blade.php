@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@push('style')
+    <link href="{{ asset('css/library/fontawesome.css') }}" rel="stylesheet" />
+@endpush
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@section('content')
 
     <div class="mx-auto max-w-2xl py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
         <h1 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 text-center">Propiedades en Venta</h1>

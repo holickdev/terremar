@@ -192,7 +192,7 @@
                     <select class="js-example-basic-single" name="advisorIdentification"
                         value="{{ $property->advisors[0]->person->identification }}">
                         <option class="text-justify" value='{{ null }}'>Nombre y Apellido - Cédula</option>
-                        @foreach ($advisors as $advisor)
+                        @foreach ($property->advisors as $advisor)
                             <option class="text-justify" value='{{ $advisor->person->identification }}'>
                                 {{ $advisor->person->name }} {{ $advisor->person->lastname }} -
                                 {{ number_format($advisor->person->identification, 0, '', '.') }}
@@ -203,26 +203,9 @@
 
                 <h5 class="text-lg font-semibold mb-4">Imagenes del Inmueble</h5>
                 <div class="relative z-0 w-full mb-4 group">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for=""picture>Subir Imagen</label>
                     <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="pic1" value="{{$property->pic1}}" type="file">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for=""picture>Subir Imagen</label>
-                    <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="pic2" value="{{$property->pic2}}" type="file">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for=""picture>Subir Imagen</label>
-                    <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="pic3" value="{{$property->pic3}}" type="file">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for=""picture>Subir Imagen</label>
-                    <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="pic4" value="{{$property->pic4}}" type="file">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for=""picture>Subir Imagen</label>
-                    <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="pic5" value="{{$property->pic5}}" type="file">
+                        class="block w-96 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="picture" name="media[]" multiple accept="image/*,video/*" type="file">
                 </div>
 
                 <button type="button" @click="step = 2"

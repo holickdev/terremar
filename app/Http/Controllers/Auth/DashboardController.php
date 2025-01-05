@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Models\User; // Ejemplo de modelo para obtener usuarios activos
 use App\Models\Person; // Ejemplo de modelo para obtener usuarios activos
@@ -17,6 +18,9 @@ use App\Models\Property; // Ejemplo de modelo para obtener usuarios activos
 
 class DashboardController extends Controller
 {
+
+    use AuthorizesRequests;
+
     // Método que muestra el dashboard
     public function index()
     {
@@ -98,11 +102,16 @@ class DashboardController extends Controller
     }
 
     public function property($id){
-        $property = Property::findOrFail($id);
-
-        return view('auth.property-view',compact('property'));
-
+        // Cargar la propiedad con las relaciones 'owner' y 'address' usando Eager Loading
+        $property = Property::with('owner', 'address', 'owner.address')->findOrFail($id);
+    
+        // Autorizar la acción de ver la propiedad
+        $this->authorize('view', $property);
+    
+        // Retornar la vista con la propiedad cargada
+        return view('auth.property-view', compact('property'));
     }
+    
 
     public function products()
     {

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Terremar'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,6 +105,7 @@ return [
         ),
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -122,12 +123,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-    'providers' => [
-        // Otros proveedores...
-
-        App\Providers\AuthServiceProvider::class,
-    ],
-
 
 ];
