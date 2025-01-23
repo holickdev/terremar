@@ -1,4 +1,6 @@
-<nav class="flex mb-5" aria-label="Breadcrumb" x-data="breadcrumb()">
+@props(['url'])
+
+<nav class="flex mb-5" aria-label="Breadcrumb" x-data="{{$url ?? "breadcrumb()" }}">
     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
         <!-- Generar las partes del breadcrumb -->
         <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20"
@@ -34,7 +36,7 @@
             init() {
                 const url = window.location.pathname; // Captura la ruta actual
                 const segments = url.split('/').filter(segment => segment !== ''); // Divide en segmentos y elimina vacíos
-                
+
                 // Genera un array con etiquetas y URLs
                 this.parts = segments.map((segment, index) => {
                     return {

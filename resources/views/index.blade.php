@@ -6,11 +6,81 @@
 @section('content')
     <div>
 
+        <section class="bg-white dark:bg-gray-900">
+            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+                <a href="#"
+                    class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                    role="alert">
+                    <span class="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span
+                        class="text-sm font-medium">Flowbite is out! See what's new</span>
+                    <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <h1
+                    class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                    We invest in the world’s potential</h1>
+                <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at
+                    Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and
+                    drive economic growth.</p>
+                <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                    <div class="m-2 max-w-screen-md">
+                        <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                <div class="flex flex-col">
+                                    <div class="relative z-0 text-left">
+                                        <x-float-input :type="'text'" :name="'type'" :placeholder="'Propiedad'"/>
+                                        <x-input-error :messages="$errors->get('bathrooms')" class="mt-2" />
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <label for="manufacturer"
+                                        class="text-stone-600 text-sm font-medium">Manufacturer</label>
+                                    <input type="manufacturer" id="manufacturer" placeholder="cadbery"
+                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <label for="date" class="text-stone-600 text-sm font-medium">Date of Entry</label>
+                                    <input type="date" id="date"
+                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <label for="status" class="text-stone-600 text-sm font-medium">Status</label>
+
+                                    <select id="status"
+                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                        <option>Dispached Out</option>
+                                        <option>In Warehouse</option>
+                                        <option>Being Brought In</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
+                                <button
+                                    class="active:scale-95 rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-600 outline-none focus:ring hover:opacity-90">Reset</button>
+                                <button
+                                    class="active:scale-95 rounded-lg bg-blue-600 px-8 py-2 font-medium text-white outline-none focus:ring hover:opacity-90">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        {{--
         <div class="relative overflow-hidden bg-white">
             <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-30">
                 <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-4 lg:px-6">
                     <div class="sm:max-w-xl">
-                        <h1 class="text-xl font-bold tracking-tight text-gray-900 sm:text-6xl">Inmuebles ideales para cada etapa<br>de tu vida</h1>
+                        <h1 class="text-xl font-bold tracking-tight text-gray-900 sm:text-6xl">Inmuebles ideales para cada
+                            etapa<br>de tu vida</h1>
                         <p class="mt-10 text-xl text-gray-500">Adquiere un inmueble de forma cómoda y segura con Terremar.
                             ¿Que esperas para hacer tu próxima gran inversión?</p>
                     </div>
@@ -60,19 +130,22 @@
                                 </div>
                             </div>
 
-                            <a href="{{route('property')}}"
-                                class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-bold text-center font-large text-white hover:bg-indigo-700">Ver Ofertas</a>
+                            <a href="{{ route('property') }}"
+                                class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-bold text-center font-large text-white hover:bg-indigo-700">Ver
+                                Ofertas</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
         <div class="bg-gray-900 text-white py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
                     <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight sm:text-5xl lg:text-balance">
                         Encuentra el lugar donde comienza tu historia</p>
-                    <p class="mt-6 text-lg/8 text-gray-400">Descubre propiedades que se ajustan a tus necesidades. Ya sea para tu
+                    <p class="mt-6 text-lg/8 text-gray-400">Descubre propiedades que se ajustan a tus necesidades. Ya sea
+                        para tu
                         hogar o inversión, estamos aquí para ayudarte a tomar la mejor decisión.</p>
                 </div>
                 <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -104,7 +177,8 @@
                                 </div>
                                 Propiedades verificadas
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Cada inmueble es revisado cuidadosamente para garantizar
+                            <dd class="mt-2 text-base/7 text-gray-400">Cada inmueble es revisado cuidadosamente para
+                                garantizar
                                 la transparencia y calidad en cada transacción.</dd>
                         </div>
                         <div class="relative pl-16">
@@ -119,7 +193,8 @@
                                 </div>
                                 Asesoramiento personalizado
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Nuestro equipo está listo para brindarte el mejor soporte
+                            <dd class="mt-2 text-base/7 text-gray-400">Nuestro equipo está listo para brindarte el mejor
+                                soporte
                                 en cada paso del proceso, desde la búsqueda hasta el cierre.</dd>
                         </div>
                         <div class="relative pl-16">
@@ -134,7 +209,8 @@
                                 </div>
                                 Soluciones rápidas
                             </dt>
-                            <dd class="mt-2 text-base/7 text-gray-400">Te ayudamos a resolver trámites legales y financieros
+                            <dd class="mt-2 text-base/7 text-gray-400">Te ayudamos a resolver trámites legales y
+                                financieros
                                 para que tengas una experiencia sin complicaciones.</dd>
                         </div>
                     </dl>
@@ -142,35 +218,6 @@
             </div>
         </div>
 
-        <!--
-          This example requires some changes to your config:
-
-          ```
-          // tailwind.config.js
-          module.exports = {
-            // ...
-            plugins: [
-                // ...
-                require('@tailwindcss/forms'),
-                ],
-                }
-                ```
-            -->
-
-        <!--
-                This example requires some changes to your config:
-
-                ```
-                // tailwind.config.js
-                module.exports = {
-                    // ...
-                    plugins: [
-                        // ...
-                        require('@tailwindcss/forms'),
-                        ],
-                        }
-                        ```
-                    -->
         <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">
                 <h2 class="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Contact sales</h2>

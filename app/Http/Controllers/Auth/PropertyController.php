@@ -23,14 +23,28 @@ class PropertyController extends Controller
      */
     public function publicIndex()
     {
-        
-    }
-
-    public function index(){
         $query = Property::query();
 
         $properties = $query->paginate(8);
         return view('services', ['properties' => $properties]);
+    }
+
+    public function index(){
+        $user = Auth::user();
+
+        if ($user->isAdmin() || $user->isGerente()) {
+            // El admin y gerente ven todos los inmuebles
+            $properties = Property::all();
+            $title = "Todas las Propiedades";
+        } else {
+            // Los demás usuarios solo ven sus inmuebles asociados
+            $properties = $user->properties;
+            $title = "Todas tus Propiedades";
+        }
+
+        $action = "Agregar Propiedad";
+
+        return view('auth.property-index', compact('properties','title','action'));
     }
 
     /**

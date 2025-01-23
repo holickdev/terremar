@@ -69,6 +69,42 @@ class Person extends Model
         ")->first();
     }
 
+    public static function getAdvisors()
+    {
+        return User::with('person')->withCount([
+            'properties as houses' => function ($query) {
+                $query->where('type', 'Casa');
+            },
+            'properties as apartments' => function ($query) {
+                $query->where('type', 'Apartamento');
+            },
+            'properties as terrains' => function ($query) {
+                $query->where('type', 'Terreno');
+            },
+            'properties as others' => function ($query) {
+                $query->where('type', 'Others');
+            },
+        ])->get();
+    }
+
+    public static function getOwners()
+    {
+        return Person::doesntHave('User')->withCount([
+            'properties as houses' => function ($query) {
+                $query->where('type', 'Casa');
+            },
+            'properties as apartments' => function ($query) {
+                $query->where('type', 'Apartamento');
+            },
+            'properties as terrains' => function ($query) {
+                $query->where('type', 'Terreno');
+            },
+            'properties as others' => function ($query) {
+                $query->where('type', 'Others');
+            },
+        ])->get();
+    }
+
 }
 
 

@@ -26,8 +26,8 @@ class Property extends Model
         'owner_id',
         'title',
         'description',
-        'type',
-        'trade',
+        'type_id',
+        'trade_id',
         'social_class',
         'price',
         'area',
@@ -93,6 +93,16 @@ class Property extends Model
         return $this->belongsTo(Person::class, 'owner_id');
     }
 
+    public function trade()
+    {
+        return $this->belongsTo(Person::class, 'trade_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Person::class, 'type_id');
+    }
+    
     /**
      * Relationship with Address model.
      */

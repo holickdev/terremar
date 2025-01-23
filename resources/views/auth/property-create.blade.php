@@ -3,12 +3,19 @@
 
 @section('title', 'Formulario de Dos Partes')
 
+@push('style')
+    <link href="{{ asset('css/library/select2.css') }}" rel="stylesheet" />
+@endpush
+@push('script')
+    <script src="{{ asset('js/library/select2.js') }}"></script>
+@endpush
+
 @section('content')
 
     <h4 class="mb-1 text-2xl font-bold dark:text-white">Agregar Propiedad</h4>
 
     <!-- Contenedor de Alpine.js -->
-    <form method="POST" action="{{ route('store_property') }}" enctype="multipart/form-data" x-data="{ step: 1 }"
+    <form method="POST" action="{{ route('dashboard.property.store') }}" enctype="multipart/form-data" x-data="{ step: 1 }"
         class="relative mx-auto w-full overflow-hidden">
         @csrf
         <!-- Contenedor general que desliza ambas secciones -->
@@ -191,8 +198,8 @@
                 <h5 class="text-lg font-semibold mb-4">Datos del Asesor</h5>
                 <div class="relative z-0 w-full mb-4 group">
                     {{-- <x-float-input :type="'text'" :placeholder="'Cédula'" :name="'advisorIdentification'"></x-float-input> --}}
-                    <select class="js-example-basic-single" name="advisorIdentification">
-                        <option class="text-justify" value='{{ null }}'>Nombre y Apellido - Cédula</option>
+                    <select class="js-example-basic-single" name="advisorIdentifications[]" multiple>
+                        <option class="text-justify" value='{{ null }}' selected>Nombre y Apellido - Cédula</option>
                         @foreach ($advisors as $advisor)
                             <option class="text-justify" value='{{ $advisor->person->identification }}'>
                                 {{ $advisor->person->name }} {{ $advisor->person->lastname }} -

@@ -5,57 +5,45 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Advisor extends Model
+class Advisor extends User
 {
     use HasFactory;
 
-    /**
+        /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'advisors';
+    protected $table = 'users';
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
-        'name',
-        'lastname',
-        'birthdate',
-        'identification',
-        'gender',
-        'phone',
+        'person_id',
         'email',
-        'addresses_id',
+        'role',
+        'password',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $cast = [
-        'birthdate' => 'date'
-    ];
-
-    // Definir las relaciones si la tabla está relacionada con otras
-    public function address()
+    public static function getAdvisors()
     {
-        return $this->belongsTo(Address::class, 'addresses_id');
-    }
-
-    public function property_users()
-    {
-        return $this->hasMany(UserProperty::class, 'advisor_id');
-    }
-
-    public function properties()
-    {
-        return $this->hasManyThrough(Property::class, UserProperty::class, 'user_id', 'id', 'id', 'advisor_id');
+        return Advisor::select('id','email')->with('person:id,name,lastname,identification,phone')->withCount([
+            'properties as houses' => function ($query) {
+                $query->where('type', 'Casa');
+            },
+            'properties as apartments' => function ($query) {
+                $query->where('type', 'Apartamento');
+            },
+            'properties as terrains' => function ($query) {
+                $query->where('type', 'Terreno');
+            },
+            'properties as others' => function ($query) {
+                $query->where('type', 'Others');
+            },
+        ])->get();
     }
 }
 

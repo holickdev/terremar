@@ -27,8 +27,8 @@ Route::get('/products', function () {
     return view('products');
 })->name('product');
 
-Route::get('/property', [PropertyController::class, 'index'])->name('property');
-Route::get('/property/{id}', [PropertyController::class, 'show'])->name('property.show');
+Route::get('/property', [PropertyController::class, 'publicIndex'])->name('property');
+Route::get('/property/{id}', [PropertyController::class, 'publicShow'])->name('property.show');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 

@@ -75,6 +75,6 @@ class RegisteredUserController extends Controller
         }
 
 
-        return redirect(route('register', absolute: false));
+        return redirect(route('advisor.create', absolute: false));
     }
 }

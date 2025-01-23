@@ -30,6 +30,9 @@
     <script src="{{ asset('js/library/select2.js') }}"></script>
     <script src="{{ asset('js/custom/select2.js') }}"></script>
 
+    @stack('style') <!-- Aquí se colocarán los estilos añadidos con '@-push('styles')' -->
+    @stack('script') <!-- Aquí se colocarán los scripts añadidos con @-push('scripts') -->
+
 </head>
 
 <body class="font-sans antialiased">
@@ -82,21 +85,21 @@
                             </button>
                             <ul id="dropdown-example" class="hidden py-2 space-y-2">
                                 <li>
-                                    <a href="{{ route('new_property') }}"
+                                    <a href="{{ route('dashboard.property.create') }}"
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Propiedades</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('register') }}"
+                                    <a href="{{ route('advisor.create') }}"
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Asesores</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('new_blog') }}"
+                                    <a href="{{ route('blog.create') }}"
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Blogs</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard') }}"
+                            <a href="{{ route('dashboard.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -110,7 +113,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('properties') }}"
+                            <a href="{{ route('dashboard.property.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
                                     class="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white
@@ -119,7 +122,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('advisors') }}"
+                            <a href="{{ route('advisor.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
                                     class="flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white
@@ -128,7 +131,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('owners') }}"
+                            <a href="{{ route('owner.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
                                     class="flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white

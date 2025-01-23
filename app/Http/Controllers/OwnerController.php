@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Owner;
-use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Models\Owner;
 
-class PersonController extends Controller
+class OwnerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        $owners = Owner::getOwners();
 
+        return view('auth.owner-index', [
+            'owners' => $owners,
+            'title' => "Todos los Propietarios",
+            'action' => "Agregar Propietario"
+        ]);
     }
 
     /**
@@ -35,7 +37,7 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Person $Person)
+    public function show(Owner $Owner)
     {
         //
     }
@@ -43,7 +45,7 @@ class PersonController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Person $Person)
+    public function edit(Owner $Owner)
     {
         //
     }
@@ -51,7 +53,7 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Person $Person)
+    public function update(Request $request, Owner $Owner)
     {
         //
     }
@@ -59,7 +61,7 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Person $Person)
+    public function destroy(Owner $Owner)
     {
         //
     }

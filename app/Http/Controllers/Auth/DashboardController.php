@@ -33,14 +33,26 @@ class DashboardController extends Controller
         $action = "Crear Reporte";
 
         // Retornar la vista del dashboard con los datos
-        return view('auth.dashboard', compact('count', 'percent', 'liquid', 'age', 'title', 'action'));
+        return view('auth.dashboard-index', compact('count', 'percent', 'liquid', 'age', 'title', 'action'));
     }
 
     public function profile()
     {
-        $profile = User::find(Auth::id());
+        $profile = Auth::user();
 
-        return view('auth.profile', compact('profile'));
+        $disabled = true;
+
+        return view('auth.profile', compact('profile','disabled'));
+    }
+
+    public function profile_edit()
+    {
+        $profile = Auth::user();
+
+        $disabled = false;
+
+        return view('auth.profile', compact('profile','disabled'));
+
     }
 
     public function update(Request $request, $id)
@@ -74,57 +86,10 @@ class DashboardController extends Controller
             'email' => $request->input('email'),
         ]);
 
+        session()->flash('success', 'Datos Actualizados Exitosamente.');
+
         // Redirigir a una página de éxito o con mensaje
         return redirect()->route('profile');
-    }
-
-
-    public function properties()
-    {
-
-        $user = Auth::user();
-
-        if ($user->isAdmin() || $user->isGerente()) {
-            // El admin y gerente ven todos los inmuebles
-            $properties = Property::all();
-            $title = "Todas las Propiedades";
-        } else {
-            // Los demás usuarios solo ven sus inmuebles asociados
-            $properties = $user->properties;
-            $title = "Todas tus Propiedades";
-        }
-
-        $action = "Agregar Propiedad";
-
-        return view('auth.properties', compact('properties','title','action'));
-
-        // return $properties;
-    }
-
-    public function property($id){
-        // Cargar la propiedad con las relaciones 'owner' y 'address' usando Eager Loading
-        $property = Property::with('owner', 'address', 'owner.address')->findOrFail($id);
-    
-        // Autorizar la acción de ver la propiedad
-        $this->authorize('view', $property);
-    
-        // Retornar la vista con la propiedad cargada
-        return view('auth.property-view', compact('property'));
-    }
-    
-
-    public function products()
-    {
-
-        $properties = Property::all();
-
-        // foreach ($properties as $property){
-        //     echo json_encode($property->owner);
-        // }
-
-        return view('auth.products', [
-            'properties' => $properties
-        ]);
     }
 
     public function faq()
@@ -148,55 +113,6 @@ class DashboardController extends Controller
     public function newBlog()
     {
         return view('auth.add-blog');
-    }
-
-    public function advisors()
-    {
-        $advisors = DashboardController::getAdvisors();
-
-        return view('auth.advisors', [
-            'advisors' => $advisors,
-            'title' => "Todas los Asesores",
-            'action' => "Agregar Asesor"
-        ]);
-    }
-
-    public function owners()
-    {
-        $owners = DashboardController::getOwners();
-
-        return view('auth.owners', [
-            'owners' => $owners,
-            'title' => "Todos los Propietarios",
-            'action' => "Agregar Propietario"
-        ]);
-    }
-
-    public function newProperty()
-    {
-        $advisors = DashboardController::getAdvisors();
-
-        return view('auth.addproperty', [
-            'advisors' => $advisors
-        ]);
-    }
-
-    private static function getAdvisors()
-    {
-        return User::with('person')->withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type', 'Terreno');
-            },
-            'properties as others' => function ($query) {
-                $query->where('type', 'Others');
-            },
-        ])->get();
     }
 
     private static function getOwners()

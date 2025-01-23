@@ -87,7 +87,7 @@
     <tbody>
         @foreach ($advisors as $advisor)
         {{-- @php $advisor = $advisor->person @endphp --}}
-            <tr>
+            <tr onclick="window.location='{{ route('advisor.show', $advisor->id) }}'" class="cursor-pointer">
                 <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{number_format($advisor->person->identification, 0, '', '.')}}</td>
                 <td>{{$advisor->person->name}}</td>
                 <td>{{$advisor->person->lastname}}</td>

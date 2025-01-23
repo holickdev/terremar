@@ -54,7 +54,7 @@
                     </a>
                     <script>
                         const url = window.location.pathname;
-                        document.getElementById('createButton').href = url+"/add"
+                        document.getElementById('createButton').href = url+"/create"
                     </script>
                 </div>
             </div>

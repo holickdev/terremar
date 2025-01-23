@@ -8,7 +8,8 @@
     <h4 class="mb-1 text-2xl font-bold dark:text-white">Editar Propiedad</h4>
 
     <!-- Contenedor de Alpine.js -->
-    <form method="POST" action="{{route('update_property', $property->id)}}" x-data="{ step: 1 }" class="relative mx-auto w-full overflow-hidden">
+    <form method="POST" action="{{ route('update_property', $property->id) }}" x-data="{ step: 1 }"
+        class="relative mx-auto w-full overflow-hidden">
         @csrf
         @method('PUT')
         <!-- Contenedor general que desliza ambas secciones -->
@@ -66,7 +67,7 @@
                         <x-float-input :type="'text'" :placeholder="'Negocio'" :name="'trade'"
                             value="{{ $property->trade }}"></x-float-input>
                     </div>
-                    
+
                 </div>
                 <div class="relative z-0 w-full mb-4 group">
                     <label for="captation_date"
@@ -149,7 +150,7 @@
                     </div>
                     <div class="relative z-0 w-full mb-4 group">
                         <x-date-picker :placeholder="'Fecha de Nacimiento'" :name="'birthdate'"
-                            date_value="{{$property->owner->birthdate}}"></x-date-picker>
+                            date_value="{{ $property->owner->birthdate }}"></x-date-picker>
                     </div>
                 </div>
 
@@ -188,12 +189,12 @@
             <div class="w-full p-4 flex-shrink-0">
                 <h5 class="text-lg font-semibold mb-4">Datos del Asesor</h5>
                 <div class="relative z-0 w-full mb-4 group">
-                    {{-- <x-float-input :type="'text'" :placeholder="'Cédula'" :name="'advisorIdentification'"></x-float-input> --}}
-                    <select class="js-example-basic-single" name="advisorIdentification"
-                        value="{{ $property->advisors[0]->person->identification }}">
+                    {{-- Input select con múltiples opciones --}}
+                    <select class="js-example-basic-single w-full" name="advisorIdentifications[]" multiple>
                         <option class="text-justify" value='{{ null }}'>Nombre y Apellido - Cédula</option>
-                        @foreach ($property->advisors as $advisor)
-                            <option class="text-justify" value='{{ $advisor->person->identification }}'>
+                        @foreach ($advisors as $advisor)
+                            <option class="text-justify" value='{{ $advisor->person->identification }}'
+                                {{ $property->advisors->contains($advisor) ? 'selected' : '' }}>
                                 {{ $advisor->person->name }} {{ $advisor->person->lastname }} -
                                 {{ number_format($advisor->person->identification, 0, '', '.') }}
                             </option>
@@ -201,12 +202,36 @@
                     </select>
                 </div>
 
+
                 <h5 class="text-lg font-semibold mb-4">Imagenes del Inmueble</h5>
-                <div class="relative z-0 w-full mb-4 group">
-                    <input
-                        class="block w-96 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="media[]" multiple accept="image/*,video/*" type="file">
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                    @foreach ($property->media as $media)
+                        <label class="relative block cursor-pointer group">
+                            @if (str_starts_with($media->type, 'image/'))
+                                <img src="{{ asset('storage/' . $media->url) }}"
+                                     alt="Imagen"
+                                     class="rounded-lg border-2 border-gray-300 group-hover:border-blue-500 transition duration-200">
+                            @elseif (str_starts_with($media->type, 'video/'))
+                                <video class="rounded-lg border-2 border-gray-300 group-hover:border-blue-500 transition duration-200" controls>
+                                    <source src="{{ asset('storage/' . $media->url) }}" type="{{ $media->type }}">
+                                    Tu navegador no soporta la reproducción de videos.
+                                </video>
+                            @endif
+
+                            <!-- Checkbox oculto -->
+                            <input type="checkbox" name="delete_media[]" value="{{ $media->id }}"
+                                   class="absolute top-0 left-0 w-full h-full opacity-0 peer">
+
+                            <!-- Indicador de selección -->
+                            <span class="absolute top-2 right-2 w-6 h-6 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center opacity-0 peer-checked:opacity-100 peer-checked:border-blue-500 transition duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                        </label>
+                    @endforeach
                 </div>
+
 
                 <button type="button" @click="step = 2"
                     class="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Volver</button>

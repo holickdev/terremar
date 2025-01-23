@@ -85,7 +85,7 @@
                 <div class=" px-4">
                     <h2 class="text-3xl font-bold mb-2">{{ $property->title }}</h2>
                     <p class="text-gray-600 mb-4">
-                        En {{ $property->trade }}
+                        En {{ $property->trade->name }}
                     </p>
                     <div class="mb-4">
                         <span class="text-2xl font-bold mr-2">${{ number_format($property->price, 2, ',', '.') }}</span>
