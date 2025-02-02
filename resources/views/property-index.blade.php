@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
 @push('style')
-    <link href="{{ asset('css/library/fontawesome.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/library/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/library/solid.css') }}" />
 @endpush
 
 @section('content')
 
-    <div class="mx-auto max-w-2xl py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
+    <div class="mx-auto max-w-2xl py-16 px-6 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
         <h1 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 text-center">Propiedades en Venta</h1>
 
         <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

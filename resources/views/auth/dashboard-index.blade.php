@@ -493,7 +493,7 @@
                                     formatter: function(w) {
                                         const sum = w.globals.seriesTotals.reduce((a, b) => {
                                             return a + b
-                                        }, 2)
+                                        }, 0)
                                         return '$' + sum + 'M'
                                     },
                                 },
@@ -502,7 +502,7 @@
                                     fontFamily: "Inter, sans-serif",
                                     offsetY: -20,
                                     formatter: function(value) {
-                                        return value + "k"
+                                        return value + "M"
                                     },
                                 },
                             },

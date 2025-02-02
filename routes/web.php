@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
@@ -29,6 +30,7 @@ Route::get('/property', [PropertyController::class, 'publicIndex'])->name('prope
 Route::get('/property/{id}', [PropertyController::class, 'publicShow'])->name('property.show');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/address/{id}', [AddressController::class, 'show'])->name('ad');
 
 Route::get('/blog/{title}', [BlogController::class, 'show'])->name('blog.view');
 

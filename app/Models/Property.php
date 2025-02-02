@@ -63,7 +63,7 @@ class Property extends Model
                 COUNT(CASE WHEN types.name = 'Terreno' THEN 1 END) AS terrains,
                 COUNT(CASE WHEN types.name NOT IN ('Casa', 'Apartamento', 'Terreno') THEN 1 END) AS others
             ")->first();
-    }    
+    }
 
     public static function percent()
     {
@@ -85,8 +85,26 @@ class Property extends Model
                 SUM(CASE WHEN types.name NOT IN ('Casa', 'Apartamento', 'Terreno') THEN price ELSE 0 END) AS others
             ")->first();
     }
-    
 
+    public function scopeFilter($query, array $filters)
+    {
+        // Filtro por trade
+        if ($filters['trade'] ?? false) {
+            $query->whereRelation('trade', 'name', $filters['trade']);
+        }
+
+        // Filtro por type
+        if ($filters['type'] ?? false) {
+            $query->whereRelation('type', 'name', $filters['type']);
+        }
+
+        // Filtro por municipality (a través de address)
+        if ($filters['municipality'] ?? false) {
+            $query->whereRelation('address.parish.municipality', 'name', $filters['municipality']);
+        }
+
+        return $query;
+    }
 
     /**
      * Relationship with Owner model.
@@ -96,16 +114,22 @@ class Property extends Model
         return $this->belongsTo(Person::class, 'owner_id');
     }
 
+    /**
+     * Relationship with Trade model.
+    */
     public function trade()
     {
         return $this->belongsTo(Trade::class, 'trade_id');
     }
 
+    /**
+    * Relationship with Type model.
+    */
     public function type()
     {
         return $this->belongsTo(Type::class, 'type_id');
     }
-    
+
     /**
      * Relationship with Address model.
      */

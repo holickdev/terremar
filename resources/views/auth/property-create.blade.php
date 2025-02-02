@@ -7,7 +7,9 @@
     <link href="{{ asset('css/library/select2.css') }}" rel="stylesheet" />
 @endpush
 @push('script')
+    <script src="{{ asset('js/library/jquery.js') }}"></script>
     <script src="{{ asset('js/library/select2.js') }}"></script>
+    <script src="{{ asset('js/custom/select2.js') }}"></script>
 @endpush
 
 @section('content')
@@ -98,6 +100,11 @@
                 <h5 class="text-lg font-semibold mt-6 mb-4">Dirección de la Propiedad</h5>
                 <!-- Otros campos de la dirección (municipio, parroquia, etc.) -->
                 <div class="grid md:grid-cols-2 md:gap-6">
+                    
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :type="'text'" :placeholder="'País'" :name="'country'"></x-float-input>
+                        <x-input-error :messages="$errors->get('country')" class="mt-2" />
+                    </div>
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Estado'" :name="'state'"></x-float-input>
                         <x-input-error :messages="$errors->get('state')" class="mt-2" />
@@ -110,7 +117,7 @@
                         <x-float-input :type="'text'" :placeholder="'Parroquia'" :name="'parish'"></x-float-input>
                         <x-input-error :messages="$errors->get('parish')" class="mt-2" />
                     </div>
-                    <div class="relative z-0 w-full mb-4 group">
+                    <div class="relative z-0 w-full mb-4 group col-span-2">
                         <x-float-input :type="'text'" :placeholder="'Punto de Referencia'" :name="'point_reference'"></x-float-input>
                         <x-input-error :messages="$errors->get('point_reference')" class="mt-2" />
                     </div>
@@ -167,6 +174,10 @@
                 <!-- Otros campos de la dirección (municipio, parroquia, etc.) -->
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :type="'text'" :placeholder="'País'" :name="'ownerCountry'"></x-float-input>
+                        <x-input-error :messages="$errors->get('ownerCountry')" class="mt-2" />
+                    </div>
+                    <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Estado'" :name="'ownerState'"></x-float-input>
                         <x-input-error :messages="$errors->get('ownerState')" class="mt-2" />
                     </div>
@@ -174,13 +185,11 @@
                         <x-float-input :type="'text'" :placeholder="'Municipio'" :name="'ownerMunicipality'"></x-float-input>
                         <x-input-error :messages="$errors->get('ownerMunicipality')" class="mt-2" />
                     </div>
-                </div>
-                <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Parroquia'" :name="'ownerParish'"></x-float-input>
                         <x-input-error :messages="$errors->get('ownerParish')" class="mt-2" />
                     </div>
-                    <div class="relative z-0 w-full mb-4 group">
+                    <div class="relative z-0 w-full mb-4 group col-span-2">
                         <x-float-input :type="'text'" :placeholder="'Punto de Referencia'" :name="'ownerPoint_reference'"></x-float-input>
                         <x-input-error :messages="$errors->get('ownerPoint_reference')" class="mt-2" />
                     </div>

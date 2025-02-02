@@ -3,7 +3,13 @@
 @section('title', 'WF1')
 
 @push('style')
-    <link href="{{ asset('css/library/fontawesome.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/library/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/library/fontawesome.all.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('css/library/solid.css') }}" /> --}}
+@endpush
+
+@push('script')
+    <script src="{{ asset('js/library/flowbite.js') }}"></script>
 @endpush
 
 @section('content')
@@ -143,9 +149,9 @@
 
             </div>
 
-            <aside class="px-4 mb-6 md:w-1/4">
+            <aside class="px mb-6 md:w-1/4">
                 <h3 class="text-lg font-semibold mb-2">Asesores:</h3>
-                <div class="flex justify-center">
+                <div class="flex justify-center flex-col gap-2">
                     @foreach ($property->advisors as $advisor)
                         <div
                             class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 lg:sticky lg:top-[10px]">
@@ -163,7 +169,7 @@
                                     </a>
                                     <a href="#"
                                         class="py-2 px-4 ms-2 text-sm font-medium text-white focus:outline-none bg-red-600 rounded-lg border border-red-200 hover:bg-red-800 focus:z-10 focus:ring-4 focus:ring-red-800 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                        <i class="fa-regular fa-envelope"></i>
+                                        <i class="fa-solid fa-envelope"></i>
                                         Contactar
                                     </a>
                                 </div>

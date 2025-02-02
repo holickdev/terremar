@@ -23,12 +23,11 @@
     @stack('style') <!-- Aquí se colocarán los estilos añadidos con '@-push('styles')' -->
     @stack('script') <!-- Aquí se colocarán los scripts añadidos con @-push('scripts') -->
 
-    <script src="{{ asset('js/library/flowbite.js') }}"></script>
 
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="flex flex-col min-h-screen bg-gray-100">
         <!-- Page Heading -->
         <header>
             <nav class="bg-gray-800">
@@ -76,8 +75,8 @@
                                     <!-- Link a Servicios -->
                                     <x-dropdown :options="[
                                         ['label' => 'Todas', 'url' => route('property.index')],
-                                        ['label' => 'Casas', 'url' => route('property.index','Casa')],
-                                        ['label' => 'Departamentos', 'url' => route('property.index','Apartamento')],
+                                        ['label' => 'Casas', 'url' => route('property.index',['type' => 'Casa'])],
+                                        ['label' => 'Apartamentos', 'url' => route('property.index',['type' => 'Apartamento'])],
                                     ]">
                                         Servicios
                                     </x-dropdown>
@@ -108,7 +107,7 @@
                 </div>
 
                 <!-- Mobile menu, show/hide based on menu state. -->
-                <div class="sm:hidden" id="mobile-menu">
+                <div class="hidden" id="mobile-menu">
                     <div class="space-y-1 px-2 pb-3 pt-2">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="#"
@@ -126,7 +125,7 @@
         </header>
 
         <!-- Page Content -->
-        <main>
+        <main class="grow">
             @yield('content')
         </main>
 

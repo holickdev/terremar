@@ -1,7 +1,16 @@
 <!-- resources/views/home.blade.php -->
 @extends('layouts.board')
 
-@section('title', 'Formulario de Dos Partes')
+@section('title', 'Editar Propiedad')
+
+@push('style')
+    <link href="{{ asset('css/library/select2.css') }}" rel="stylesheet" />
+@endpush
+@push('script')
+    <script src="{{ asset('js/library/jquery.js') }}"></script>
+    <script src="{{ asset('js/library/select2.js') }}"></script>
+    <script src="{{ asset('js/custom/select2.js') }}"></script>
+@endpush
 
 @section('content')
 

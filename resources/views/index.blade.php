@@ -4,7 +4,7 @@
 @section('title', 'WF1') <!-- Opcional: si quisieras personalizar el título en el head -->
 
 @section('content')
-        <section class="bg-white dark:bg-gray-900">
+        <section class="md:h-100 mdbg-white dark:bg-gray-900">
             <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-16 ">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
@@ -14,32 +14,32 @@
                     Descubre Terremar
                 </p>
                 <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                    <div class="w-screen">
+                    <div class="lg:w-screen">
                         <div class="flex flex-col">
 
                             <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
                                 <form action="{{ route('property.index') }}">
-                                    
+
                                     <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'state'" :placeholder="'Negocios'" :options="$trades" />
+                                            <x-float-select :name="'trade'" :placeholder="'Negocios'" :options="$trades" />
                                         </div>
 
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'state'" :placeholder="'Tipo'" :options="$types" />
+                                            <x-float-select :name="'type'" :placeholder="'Tipo'" :options="$types" />
                                         </div>
 
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'state'" :placeholder="'Municipio'" :options="$municipalities" />
+                                            <x-float-select :name="'municipality'" :placeholder="'Municipio'" :options="$municipalities" />
                                         </div>
-                                        <div class="mt-6 grid w-full grid-cols-2 justify-end gap-3">
+                                        <div class="md:col-start-3 flex flex-col mt-3 grid w-full grid-cols-2 justify-end gap-3">
                                             <button
                                                 class="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">Limpiar</button>
                                             <button
                                                 class="rounded-lg bg-blue-600 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring">Buscar</button>
                                         </div>
                                     </div>
-                                    
+
                                 </form>
                             </div>
                         </div>

@@ -34,9 +34,10 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Address $address)
+    public function show($id)
     {
-        //
+        $address = Address::with('parish.municipality')->find($id);
+        echo $address->parish->municipality;
     }
 
     /**

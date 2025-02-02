@@ -21,17 +21,15 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+    
     <link href="{{ asset('css/library/flowbite.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/library/select2.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/library/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/library/solid.css') }}" />
     <script src="{{ asset('js/library/flowbite.js') }}"></script>
     <script src="{{ asset('js/library/flowbite-datatable.js') }}"></script>
-    <script src="{{ asset('js/library/jquery.js') }}"></script>
-    <script src="{{ asset('js/library/select2.js') }}"></script>
-    <script src="{{ asset('js/custom/select2.js') }}"></script>
 
-    @stack('style') <!-- Aquí se colocarán los estilos añadidos con '@-push('styles')' -->
-    @stack('script') <!-- Aquí se colocarán los scripts añadidos con @-push('scripts') -->
+    @stack('style')
+    @stack('script')
 
 </head>
 
