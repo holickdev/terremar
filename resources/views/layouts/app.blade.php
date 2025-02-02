@@ -33,7 +33,7 @@
         <header>
             <nav class="bg-gray-800">
                 <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                    <div class="relative flex h-16 items-center justify-between">
+                    <div class="relative flex h-20 items-center justify-between">
                         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                             <!-- Mobile menu button-->
                             <button type="button"
@@ -75,9 +75,9 @@
 
                                     <!-- Link a Servicios -->
                                     <x-dropdown :options="[
-                                        ['label' => 'Todas', 'url' => route('property')],
-                                        ['label' => 'Casas', 'url' => route('property','Casa')],
-                                        ['label' => 'Departamentos', 'url' => route('property','Apartamento')],
+                                        ['label' => 'Todas', 'url' => route('property.index')],
+                                        ['label' => 'Casas', 'url' => route('property.index','Casa')],
+                                        ['label' => 'Departamentos', 'url' => route('property.index','Apartamento')],
                                     ]">
                                         Servicios
                                     </x-dropdown>

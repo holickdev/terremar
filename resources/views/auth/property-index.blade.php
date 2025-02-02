@@ -93,7 +93,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 @foreach ($properties as $property)
-                    <tr onclick="window.location='{{ route('property.show', $property->id) }}'" class="cursor-pointer">
+                    <tr onclick="window.location='{{ route('dashboard.property.show', $property->id) }}'" class="cursor-pointer">
                             <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $property->title }}</td>
                             <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">

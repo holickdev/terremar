@@ -55,14 +55,15 @@ class Property extends Model
 
     public static function counter()
     {
-        return Property::selectRaw("
-            COUNT(*) AS total,
-            COUNT(CASE WHEN type = 'Casa' THEN 1 END) AS houses,
-            COUNT(CASE WHEN type = 'Apartamento' THEN 1 END) AS apartments,
-            COUNT(CASE WHEN type = 'Terreno' THEN 1 END) AS terrains,
-            COUNT(CASE WHEN type NOT IN ('Casa', 'Apartamento', 'Terreno') THEN 1 END) AS others
-        ")->first();
-    }
+        return Property::join('types', 'properties.type_id', '=', 'types.id')
+            ->selectRaw("
+                COUNT(*) AS total,
+                COUNT(CASE WHEN types.name = 'Casa' THEN 1 END) AS houses,
+                COUNT(CASE WHEN types.name = 'Apartamento' THEN 1 END) AS apartments,
+                COUNT(CASE WHEN types.name = 'Terreno' THEN 1 END) AS terrains,
+                COUNT(CASE WHEN types.name NOT IN ('Casa', 'Apartamento', 'Terreno') THEN 1 END) AS others
+            ")->first();
+    }    
 
     public static function percent()
     {
@@ -76,13 +77,15 @@ class Property extends Model
 
     public static function liquid()
     {
-        return Property::selectRaw("
-            SUM(CASE WHEN type = 'Casa' THEN price ELSE 0 END) AS houses,
-            SUM(CASE WHEN type = 'Apartamento' THEN price ELSE 0 END) AS apartments,
-            SUM(CASE WHEN type = 'Terreno' THEN price ELSE 0 END) AS terrains,
-            SUM(CASE WHEN type NOT IN ('Casa', 'Apartamento', 'Terreno') THEN price ELSE 0 END) AS others
-        ")->first();
+        return Property::join('types', 'properties.type_id', '=', 'types.id')
+            ->selectRaw("
+                SUM(CASE WHEN types.name = 'Casa' THEN price ELSE 0 END) AS houses,
+                SUM(CASE WHEN types.name = 'Apartamento' THEN price ELSE 0 END) AS apartments,
+                SUM(CASE WHEN types.name = 'Terreno' THEN price ELSE 0 END) AS terrains,
+                SUM(CASE WHEN types.name NOT IN ('Casa', 'Apartamento', 'Terreno') THEN price ELSE 0 END) AS others
+            ")->first();
     }
+    
 
 
     /**
@@ -95,12 +98,12 @@ class Property extends Model
 
     public function trade()
     {
-        return $this->belongsTo(Person::class, 'trade_id');
+        return $this->belongsTo(Trade::class, 'trade_id');
     }
 
     public function type()
     {
-        return $this->belongsTo(Person::class, 'type_id');
+        return $this->belongsTo(Type::class, 'type_id');
     }
     
     /**

@@ -11,7 +11,7 @@
             <div class="flex flex-wrap md:flex-row flex-col gap-6">
                 <div class="flex-1">
                     <h3 class="text-2xl font-bold mb-2">{{ $property->title }}</h3>
-                    <p class="text-gray-600 mb-4">{{ $property->trade }}</p>
+                    <p class="text-gray-600 mb-4">{{ $property->trade->name }}</p>
 
                     <div class="mb-4">
                         <span
@@ -64,7 +64,7 @@
 
             <!-- Botones de acción -->
             <div class="flex justify-end mt-2">
-                <a href="{{route('edit_property',$property->id)}}"
+                <a href="{{route('dashboard.property.edit',$property->id)}}"
                     class="ml-4 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Editar Propiedad
                 </a>

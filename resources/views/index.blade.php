@@ -4,71 +4,48 @@
 @section('title', 'WF1') <!-- Opcional: si quisieras personalizar el título en el head -->
 
 @section('content')
-    <div>
-
         <section class="bg-white dark:bg-gray-900">
-            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-                <a href="#"
-                    class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
-                    role="alert">
-                    <span class="text-xs bg-blue-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span
-                        class="text-sm font-medium">Flowbite is out! See what's new</span>
-                    <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
+            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-16 ">
                 <h1
                     class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                    We invest in the world’s potential</h1>
-                <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at
-                    Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and
-                    drive economic growth.</p>
+                    Tu nueva propiedad te espera</h1>
+                <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+                    Descubre las propiedades y terrenos disponibles. De acorde a tus gustos. De acorde a tus necesidades.
+                    Descubre Terremar
+                </p>
                 <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                    <div class="m-2 max-w-screen-md">
-                        <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
-                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                <div class="flex flex-col">
-                                    <div class="relative z-0 text-left">
-                                        <x-float-input :type="'text'" :name="'type'" :placeholder="'Propiedad'"/>
-                                        <x-input-error :messages="$errors->get('bathrooms')" class="mt-2" />
+                    <div class="w-screen">
+                        <div class="flex flex-col">
+
+                            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+                                <form action="{{ route('property.index') }}">
+                                    
+                                    <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                                        <div class="flex flex-col">
+                                            <x-float-select :name="'state'" :placeholder="'Negocios'" :options="$trades" />
+                                        </div>
+
+                                        <div class="flex flex-col">
+                                            <x-float-select :name="'state'" :placeholder="'Tipo'" :options="$types" />
+                                        </div>
+
+                                        <div class="flex flex-col">
+                                            <x-float-select :name="'state'" :placeholder="'Municipio'" :options="$municipalities" />
+                                        </div>
+                                        <div class="mt-6 grid w-full grid-cols-2 justify-end gap-3">
+                                            <button
+                                                class="rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-700 outline-none hover:opacity-80 focus:ring">Limpiar</button>
+                                            <button
+                                                class="rounded-lg bg-blue-600 px-8 py-2 font-medium text-white outline-none hover:opacity-80 focus:ring">Buscar</button>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="flex flex-col">
-                                    <label for="manufacturer"
-                                        class="text-stone-600 text-sm font-medium">Manufacturer</label>
-                                    <input type="manufacturer" id="manufacturer" placeholder="cadbery"
-                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                                </div>
-
-                                <div class="flex flex-col">
-                                    <label for="date" class="text-stone-600 text-sm font-medium">Date of Entry</label>
-                                    <input type="date" id="date"
-                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                                </div>
-
-                                <div class="flex flex-col">
-                                    <label for="status" class="text-stone-600 text-sm font-medium">Status</label>
-
-                                    <select id="status"
-                                        class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                        <option>Dispached Out</option>
-                                        <option>In Warehouse</option>
-                                        <option>Being Brought In</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mt-6 grid w-full grid-cols-2 justify-end space-x-4 md:flex">
-                                <button
-                                    class="active:scale-95 rounded-lg bg-gray-200 px-8 py-2 font-medium text-gray-600 outline-none focus:ring hover:opacity-90">Reset</button>
-                                <button
-                                    class="active:scale-95 rounded-lg bg-blue-600 px-8 py-2 font-medium text-white outline-none focus:ring hover:opacity-90">Search</button>
+                                    
+                                </form>
                             </div>
                         </div>
+
                     </div>
+
 
                 </div>
             </div>
@@ -185,8 +162,8 @@
                             <dt class="text-base/7 font-semibold text-gray-200">
                                 <div
                                     class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 8.25l4.5 4.5H7.5l4.5-4.5z" />
                                     </svg>
@@ -201,8 +178,8 @@
                             <dt class="text-base/7 font-semibold text-gray-200">
                                 <div
                                     class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 4.5V19.5M6.75 15.75L12 10.5l5.25 5.25" />
                                     </svg>
@@ -300,7 +277,4 @@
                 </div>
             </form>
         </div>
-
-
-    </div>
 @endsection

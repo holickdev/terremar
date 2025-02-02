@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [HomeController::class,'index'])->name('index');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 
@@ -27,7 +25,7 @@ Route::get('/products', function () {
     return view('products');
 })->name('product');
 
-Route::get('/property', [PropertyController::class, 'publicIndex'])->name('property');
+Route::get('/property', [PropertyController::class, 'publicIndex'])->name('property.index');
 Route::get('/property/{id}', [PropertyController::class, 'publicShow'])->name('property.show');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');

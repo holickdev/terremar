@@ -21,16 +21,48 @@ class PropertyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function publicIndex()
+    public function publicIndex(Request $request)
     {
-        
+    // Obtener parámetros de la URL
+    $trade = $request->input('trade'); // Ejemplo: ?trade=1
+    $type = $request->input('type');   // Ejemplo: ?type=2
+    // $title = $request->input('title');  // Ejemplo: ?title=Casa
+
+    // Construir la consulta dinámica
+    $query = Property::query()
+        ->when($trade, function ($query, $trade) {
+            $query->whereHas('trade', function ($subQuery) use ($trade) {
+                $subQuery->where('name', $trade);
+            });
+        })
+        ->when($type, function ($query, $type) {
+            $query->whereHas('type', function ($subQuery) use ($type) {
+                $subQuery->where('name', $type);
+            });
+        })
+        ->with(['trade', 'type']); // Cargar relaciones
+
+        $properties = $query->paginate(8);
+
+        return view('property-index', ['properties' => $properties]);
     }
 
     public function index(){
-        $query = Property::query();
+        $user = Auth::user();
 
-        $properties = $query->paginate(8);
-        return view('services', ['properties' => $properties]);
+        if ($user->isAdmin() || $user->isGerente()) {
+            // El admin y gerente ven todos los inmuebles
+            $properties = Property::all();
+            $title = "Todas las Propiedades";
+        } else {
+            // Los demás usuarios solo ven sus inmuebles asociados
+            $properties = $user->properties;
+            $title = "Todas tus Propiedades";
+        }
+
+        $action = "Agregar Propiedad";
+
+        return view('auth.property-index', compact('properties','title','action'));
     }
 
     /**
@@ -200,7 +232,7 @@ class PropertyController extends Controller
         $this->authorize('view', $property);
 
         // Retornar la vista con la propiedad cargada
-        return view('auth.property-view', compact('property'));
+        return view('auth.property-show', compact('property'));
     }
 
     /**
@@ -211,7 +243,7 @@ class PropertyController extends Controller
         $property = Property::findOrFail($id);
         $advisors = User::select('id', 'person_id')->with(['person:id,name,lastname,identification'])->get();
 
-        return view('auth.editproperty', compact('property','advisors'));
+        return view('auth.property-edit', compact('property','advisors'));
     }
 
     /**

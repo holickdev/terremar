@@ -8,7 +8,7 @@
     <h4 class="mb-1 text-2xl font-bold dark:text-white">Editar Propiedad</h4>
 
     <!-- Contenedor de Alpine.js -->
-    <form method="POST" action="{{ route('update_property', $property->id) }}" x-data="{ step: 1 }"
+    <form method="POST" action="{{ route('dashboard.property.update', $property->id) }}" x-data="{ step: 1 }"
         class="relative mx-auto w-full overflow-hidden">
         @csrf
         @method('PUT')
@@ -30,7 +30,7 @@
 
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Tipo'" :name="'type'"
-                            value="{{ $property->type }}"></x-float-input>
+                            value="{{ $property->type->name }}"></x-float-input>
                     </div>
 
                     <div class="relative z-0 w-full mb-4 group">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Negocio'" :name="'trade'"
-                            value="{{ $property->trade }}"></x-float-input>
+                            value="{{ $property->trade->name }}"></x-float-input>
                     </div>
 
                 </div>
