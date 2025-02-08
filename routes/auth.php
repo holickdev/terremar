@@ -17,6 +17,7 @@ use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('guest')->group(function () {
 
@@ -53,9 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('dashboard/contact', [ContactController::class, 'send'])->name('contact.send');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
-    Route::get('/dashboard/profile/edit', [DashboardController::class, 'profile_edit'])->name('profile.edit');
-    Route::put('/dashboard/profile/', [DashboardController::class, 'update'])->name('profile.update');
+    Route::get('/dashboard/profile', [ProfileController::class, 'show'])->name('dashboard.profile.show');
+    Route::get('/dashboard/profile/edit', [ProfileController::class, 'edit'])->name('dashboard.profile.edit');
+    Route::put('/dashboard/profile/', [ProfileController::class, 'update'])->name('dashboard.profile.update');
 
     Route::get('/dashboard/faq', [DashboardController::class, 'faq'])->name('faq_dash');
 
@@ -89,10 +90,11 @@ Route::middleware('auth')->group(function () {
     // Route::post('/property/percent/', [PropertyController::class, 'percent'])->name('property.percent');
 
     // Advisor Views
-    Route::get('/dashboard/advisor', [AdvisorController::class, 'index'])->name('advisor.index');
-    Route::get('/dashboard/advisor/create', [RegisteredUserController::class, 'create'])->name('advisor.create');
-    Route::get('/dashboard/advisor/{id}', [AdvisorController::class, 'show'])->name('advisor.show');
-    Route::get('/dashboard/advisor/{id}/edit', [AdvisorController::class, 'edit'])->name('advisor.edit');
+    Route::get('/dashboard/advisor', [AdvisorController::class, 'index'])->name('dashboard.advisor.index');
+    Route::get('/dashboard/advisor/create', [RegisteredUserController::class, 'create'])->name('dashboard.advisor.create');
+    Route::get('/dashboard/advisor/{advisor}', [AdvisorController::class, 'show'])->name('dashboard.advisor.show');
+    Route::get('/dashboard/advisor/{advisor}/edit', [AdvisorController::class, 'edit'])->name('dashboard.advisor.edit');
+    Route::put('/dashboard/advisor/{advisor}/', [AdvisorController::class, 'update'])->name('dashboard.advisor.update');
 
     // Advisor CRUD
     Route::post('/dashboard/register', [RegisteredUserController::class, 'store'])->name('register.store');

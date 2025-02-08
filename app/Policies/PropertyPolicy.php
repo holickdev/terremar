@@ -18,7 +18,7 @@ class PropertyPolicy
     public function viewAny(User $user): bool
     {
         // Permitir la visualización de todas las propiedades si el usuario es un administrador
-        return $user->isAdmin() || $user->isGerente();  // Cambiar según la lógica de roles en tu aplicación
+        return true;  // Cambiar según la lógica de roles en tu aplicación
     }
 
     /**
@@ -47,7 +47,7 @@ class PropertyPolicy
     public function update(User $user, Property $property): bool
     {
         // Permitir la actualización solo si el usuario es el propietario de la propiedad o un administrador
-        return $property->users->contains($user) || $user->isGerente() || $user->isAdmin();
+        return $property->advisors->contains($user) || $user->isGerente() || $user->isAdmin();
     }
 
     /**
@@ -56,7 +56,7 @@ class PropertyPolicy
     public function delete(User $user, Property $property): bool
     {
         // Permitir la eliminación solo si el usuario es el propietario de la propiedad o un administrador
-        return $property->users->contains($user);
+        return $property->advisors->contains($user);
     }
 
     /**

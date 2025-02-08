@@ -129,7 +129,7 @@
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-2">Direccion:</h3>
                         <p class="text-gray-700 mb-6">
-                            {{ $property->address->state . ' > ' . $property->address->municipality . ' > ' . $property->address->parish }}
+                            {{ $property->address->state . ' > ' . $property->address->municipality . ' > ' . $property->address->city }}
                         </p>
                     </div>
 

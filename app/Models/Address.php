@@ -57,7 +57,7 @@ class Address extends Model
     // Accesor para el nombre del municipio
     public function getCityAttribute()
     {
-        return $this->parish->municipality->name ?? null;
+        return $this->parish->name ?? null;
     }
 
     // Accesor para el nombre del municipio
@@ -86,7 +86,7 @@ class Address extends Model
         // Insertar o obtener el estado (relacionado con el país)
         $state = State::firstOrCreate(
             ['name' => $data['state']],
-            ['country' => $country->id]
+            ['country_id' => $country->id]
         );
 
         // Insertar o obtener el municipio (relacionado con el estado)
@@ -118,28 +118,28 @@ class Address extends Model
         // Insertar o obtener el estado (relacionado con el país)
         $state = State::firstOrCreate(
             ['name' => $data['state'],
-            'country' => $country->id]
+            'country_id' => $country->id]
         );
 
         // Insertar o obtener el municipio (relacionado con el estado)
-        $municipality = Municipality::updateOrCreate(
-            ['name' => $data['municipality']],
-            ['state_id' => $state->id]
+        $municipality = Municipality::firstOrCreate(
+            ['name' => $data['municipality'],
+            'state_id' => $state->id]
         );
 
         // Insertar o obtener la parroquia (relacionada con el municipio)
-        $parish = Parish::updateOrCreate(
-            ['name' => $data['parish']],
-            ['municipality_id' => $municipality->id]
+        $parish = Parish::firstOrCreate(
+            ['name' => $data['parish'],
+            'municipality_id' => $municipality->id]
         );
 
         // Insertar o obtener la dirección (relacionada con la parroquia)
-        $address = Address::updateOrCreate(
-            ['point_reference' => $data['point_reference']],
-            ['parish_id' => $parish->id]
+        $address = Address::firstOrCreate(
+            ['point_reference' => $data['point_reference'],
+            'parish_id' => $parish->id]
         );
 
         return $address;
     }
-    
+
 }

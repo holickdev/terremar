@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'person_id',
         'email',
         'role',
+        'picture',
         'password',
     ];
 
@@ -53,12 +55,12 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role === self::ROLE_ADMIN;
+        return $this->role->name === self::ROLE_ADMIN;
     }
 
     public function isGerente()
     {
-        return $this->role === self::ROLE_GERENTE;
+        return $this->role->name === self::ROLE_GERENTE;
     }
 
     public function person()
@@ -66,19 +68,32 @@ class User extends Authenticatable
         return $this->belongsTo(Person::class);
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function property_users()
     {
         return $this->hasMany(UserProperty::class, 'user_id');
     }
 
-    public function faq()
+    public static function getAdvisors()
     {
-        return $this->hasMany(Faq::class, 'user_id');
+        return Advisor::with('person:id,name,lastname,identification,phone')
+            ->withCount([
+                'properties as houses' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Others');
+                },
+            ])->get();
     }
-
-    public function properties()
-    {
-        return $this->hasManyThrough(Property::class, UserProperty::class, 'user_id', 'id', 'id', 'property_id');
-    }
-
 }

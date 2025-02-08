@@ -29,7 +29,7 @@ class Owner extends Person
         'gender',
         'phone',
         'email',
-        'addresses_id',
+        'address_id',
     ];
 
     /**
@@ -42,8 +42,19 @@ class Owner extends Person
     ];
 
     // Definir las relaciones si la tabla está relacionada con otras
-    public function address()
+
+    public function properties(){
+        return $this->hasMany(Property::class, 'owner_id');
+    }
+
+    public static function age()
     {
-        return $this->belongsTo(Address::class, 'addresses_id');
+        return Person::selectRaw("
+            COUNT(CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) < 30 THEN 1 END) AS 'twenty',
+            COUNT(CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 30 AND 39 THEN 1 END) AS 'therty',
+            COUNT(CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 40 AND 49 THEN 1 END) AS 'forty',
+            COUNT(CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 50 AND 59 THEN 1 END) AS 'fifty',
+            COUNT(CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) >= 60 THEN 1 END) AS 'sixty'
+        ")->first();
     }
 }

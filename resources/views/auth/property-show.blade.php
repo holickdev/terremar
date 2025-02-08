@@ -30,7 +30,7 @@
                     <div>
                         <h4 class="text-lg font-semibold">Dirección:</h4>
                         <p class="text-gray-700">{{ $property->address->state }} > {{ $property->address->municipality }} >
-                            {{ $property->address->parish }}</p>
+                            {{ $property->address->city }}</p>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                         <li>Correo Electrónico: {{ $property->owner->email }}</li>
                         <li>Teléfono: {{ $property->owner->phone }}</li>
                         <li>Dirección: {{ $property->owner->address->state }} >
-                            {{ $property->owner->address->municipality }} > {{ $property->owner->address->parish }}</li>
+                            {{ $property->owner->address->municipality }} > {{ $property->owner->address->city }}</li>
                     </ul>
                 </div>
 

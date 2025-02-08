@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use App\Models\User; // Ejemplo de modelo para obtener usuarios activos
 use App\Models\Person; // Ejemplo de modelo para obtener usuarios activos
+use App\Models\Owner; // Ejemplo de modelo para obtener usuarios activos
 use App\Models\Faq; // Ejemplo de modelo para obtener usuarios activos
 use App\Models\Blog; // Ejemplo de modelo para obtener usuarios activos
 
@@ -28,7 +29,7 @@ class DashboardController extends Controller
         $count = Property::counter();
         $percent = Property::percent();
         $liquid = Property::liquid();
-        $age = Person::age();
+        $age = Owner::age();
         $title = "Dashboard";
         $action = "Crear Reporte";
 
@@ -55,42 +56,7 @@ class DashboardController extends Controller
 
     }
 
-    public function update(Request $request, $id)
-    {
-        // Validación de los datos del formulario
-        $request->validate([
-            'identification' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'gender' => 'required|string',
-        ]);
 
-        // Obtener el perfil
-        $profile = User::findOrFail($id);
-
-        // Actualizar los datos del perfil
-        $profile->person->update([
-            'identification' => $request->input('identification'),
-            'name' => $request->input('name'),
-            'lastname' => $request->input('lastname'),
-            'phone' => $request->input('phone'),
-            'birthdate' => $request->input('birthdate'),
-            'gender' => $request->input('gender'),
-        ]);
-
-        // Actualizar el email del perfil
-        $profile->update([
-            'email' => $request->input('email'),
-        ]);
-
-        session()->flash('success', 'Datos Actualizados Exitosamente.');
-
-        // Redirigir a una página de éxito o con mensaje
-        return redirect()->route('profile');
-    }
 
     public function faq()
     {

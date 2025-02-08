@@ -38,9 +38,9 @@ return new class extends Migration
         //     $table->timestamps();
         // });
 
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->foreignId('parish_id')->constrained()->onDelete('cascade');
-        });
+        // Schema::table('addresses', function (Blueprint $table) {
+        //     $table->foreignId('parish_id')->constrained()->onDelete('cascade');
+        // });
     }
 
     /**

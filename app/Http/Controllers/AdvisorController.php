@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Advisor;
 use Illuminate\Http\Request;
+use App\Http\Requests\AdvisorUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdvisorController extends Controller
 {
@@ -43,9 +47,9 @@ class AdvisorController extends Controller
      */
     public function show($id)
     {
-        $profile = User::findOrFail($id);
+        $advisor = User::findOrFail($id);
 
-        return view('auth.advisor-show', compact('profile'));
+        return view('auth.advisor-show', compact('advisor'));
     }
 
     /**
@@ -53,50 +57,63 @@ class AdvisorController extends Controller
      */
     public function edit($id)
     {
-        $profile = User::findOrFail($id);
+        $advisor = User::findOrFail($id);
 
-        $disabled = false;
-
-        return view('auth.advisor-show', compact('profile', 'disabled'));
+        return view('auth.advisor-edit', compact('advisor'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(AdvisorUpdateRequest $request, Advisor $advisor)
     {
-        $request->validate([
-            'identification' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'gender' => 'required|string',
-        ]);
+        // dd($advisor);
+        // Validación de los datos del formulario
+        $data = $request->validated();
 
-        // Obtener el perfil
-        $profile = User::findOrFail($id);
+        try {
+            DB::transaction(function () use ($data,$advisor) {
+                // Obtener el perfil
+                // Actualizar los datos del perfil
+                $advisor->person->update([
+                    'identification' => $data['identification'],
+                    'name' => $data['name'],
+                    'lastname' => $data['lastname'],
+                    'phone' => $data['phone'],
+                    'birthdate' => $data['birthdate'],
+                    'gender' => $data['gender'],
+                ]);
 
-        // Actualizar los datos del perfil
-        $profile->person->update([
-            'identification' => $request->input('identification'),
-            'name' => $request->input('name'),
-            'lastname' => $request->input('lastname'),
-            'phone' => $request->input('phone'),
-            'birthdate' => $request->input('birthdate'),
-            'gender' => $request->input('gender'),
-        ]);
+                $picture = $advisor->picture;
 
-        // Actualizar el email del perfil
-        $profile->update([
-            'email' => $request->input('email'),
-        ]);
+                if (isset($data['picture'])) {
+                    if ($picture) {
+                        // Limpia la ruta si es necesario
+                        $picture = str_replace('\\', '/', $picture);
 
-        session()->flash('success', 'Datos Actualizados Exitosamente.');
+                        // Verifica si el archivo existe y elimínalo
+                        if (Storage::disk('public')->exists($picture)) {
+                            Storage::disk('public')->delete($picture); // Ahora apunta correctamente al disco 'public'
+                        }
+                    }
+                    $picture = $data['picture']->store('profile', 'public'); // Almacena en storage/app/public/media
+                }
+
+                $advisor->update([
+                    'email' => $data['email'],
+                    'picture' => $picture
+                ]);
+            });
+            session()->flash('success', 'Asesor actualizado exitosamente.');
+        } catch (\Exception $e) {
+            // Captura la excepción y envía un mensaje de error
+            session()->flash('error', 'Hubo un error al actualizar al asesor. Por favor, intenta nuevamente.<br/>' . $e);
+            // (Opcional) Loguear el error para análisis
+            // \Log::error('Error al registrar propiedad: ' . $e->getMessage());
+        }
 
         // Redirigir a una página de éxito o con mensaje
-        return redirect()->route('advisor-show');
+        return redirect()->route('dashboard.advisor.show',$advisor);
     }
 
     /**

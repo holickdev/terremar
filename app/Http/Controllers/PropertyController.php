@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Property;
 use App\Models\User;
-use App\Models\UserProperty;
+use App\Models\Advisor;
 use App\Models\Person;
 use App\Models\Trade;
 use App\Models\Type;
@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PropertyRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -21,6 +24,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class PropertyController extends Controller
 {
     use AuthorizesRequests;
+
+    public function __construct()
+    {
+        // Asociar automáticamente las políticas con las acciones del controlador
+        $this->authorizeResource(Property::class, 'property');
+    }
 
     /**
      * Display a listing of the resource.
@@ -33,28 +42,28 @@ class PropertyController extends Controller
             'trade' => $request->input('trade'), // Valor de trade (si existe)
             'type' => $request->input('type'),   // Valor de type (si existe)
             'municipality' => $request->input('municipality'), // Valor de municipality (si existe)
-        ];// Construir la consulta dinámica
+        ]; // Construir la consulta dinámica
 
         // Aplicar el scope y obtener los resultados
         $properties = Property::filter($filters)
             ->with(['trade', 'type'])
             ->paginate(8);
 
-        return view( 'property-index', ['properties' => $properties]);
+        return view('property-index', ['properties' => $properties]);
     }
 
     public function index()
     {
         $user = Auth::user();
         $action = "Agregar Propiedad";
-        $title;
         if ($user->isAdmin() || $user->isGerente()) {
             // El admin y gerente ven todos los inmuebles
             $properties = Property::all();
             $title = "Todas las Propiedades";
         } else {
             // Los demás usuarios solo ven sus inmuebles asociados
-            $properties = $user->properties;
+            $advisor = Advisor::findOrFail($user->id);
+            $properties = $advisor->properties;
             $title = "Todas tus Propiedades";
         }
 
@@ -84,6 +93,8 @@ class PropertyController extends Controller
 
         try {
             DB::transaction(function () use ($data) {
+
+                // dd($data);
                 // 1. Insertar la dirección del dueño
                 $ownerAddress = Address::createNormalize([
                     'country' => $data['ownerCountry'],
@@ -96,13 +107,15 @@ class PropertyController extends Controller
                 // 2. Crear el dueño y asociarle la dirección creada
                 $owner = Person::firstOrCreate(
                     ['identification' => $data['identification']],
-                    ['name' => $data['name'],
-                    'lastname' => $data['lastname'],
-                    'birthdate' => $data['birthdate'],
-                    'gender' => $data['gender'],
-                    'phone' => $data['phone'],
-                    'email' => $data['email'],
-                    'addresses_id' => $ownerAddress->id]
+                    [
+                        'name' => $data['name'],
+                        'lastname' => $data['lastname'],
+                        'birthdate' => $data['birthdate'],
+                        'gender' => $data['gender'],
+                        'phone' => $data['phone'],
+                        'email' => $data['email'],
+                        'address_id' => $ownerAddress->id
+                    ]
                 );
 
                 // 3. Insertar la dirección de la propiedad
@@ -140,19 +153,20 @@ class PropertyController extends Controller
                     'address_id' => $propertyAddress->id,
                 ]);
 
-                // 5. Asociar la propiedad con el asesor
-                foreach ($data['advisorIdentifications'] as $identification) {
+                // 5. Asociar la propiedad con los asesores
+                $advisorIds = [];
 
+                foreach ($data['advisorIdentifications'] as $identification) {
                     $advisor = Person::where('identification', $identification)->first();
-                    UserProperty::create([
-                        'user_id' => $advisor->user->id,
-                        'property_id' => $property->id,
-                    ]);
+                    if ($advisor) {
+                        $advisorIds[] = $advisor->user->id; // Agregar el ID del usuario (asesor) al arreglo
+                    }
                 }
+                $property->advisors()->sync($advisorIds);
 
                 // 6. Subir los archivos multimedia
-                if ($data['media']) {
-                    foreach ($data['media'] as $file) {
+                if (isset($data['uploadMedia'])) {
+                    foreach ($data['uploadMedia'] as $file) {
                         $url = $file->store('media', 'public'); // Almacena en storage/app/public/media
                         Media::create([
                             'property_id' => $property->id,
@@ -167,7 +181,7 @@ class PropertyController extends Controller
             session()->flash('success', 'Propiedad registrada exitosamente.');
         } catch (\Exception $e) {
             // Captura la excepción y envía un mensaje de error
-            session()->flash('error', 'Hubo un error al registrar la propiedad. Por favor, intenta nuevamente.<br/>'.$e);
+            session()->flash('error', 'Hubo un error al registrar la propiedad. Por favor, intenta nuevamente.<br/>' . $e);
             // (Opcional) Loguear el error para análisis
             // \Log::error('Error al registrar propiedad: ' . $e->getMessage());
         }
@@ -185,7 +199,7 @@ class PropertyController extends Controller
 
         if ($property && $property->address) {
             $similars = Property::whereHas('address', function ($query) use ($property) {
-                $query->where('municipality', $property->address->municipality);
+                $query->where('parish_id', $property->address->parish_id);
             })
                 ->where('id', '!=', $property->id) // Excluye la propiedad actual
                 ->inRandomOrder() // Orden aleatorio
@@ -201,9 +215,9 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Property $property)
     {
-        $property = Property::with('owner', 'address', 'owner.address')->findOrFail($id);
+        $property->load(['advisors', 'owner', 'address', 'owner.address.parish.municipality.state.country']);
 
         // Autorizar la acción de ver la propiedad
         $this->authorize('view', $property);
@@ -215,9 +229,8 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Property $property)
     {
-        $property = Property::findOrFail($id);
         $advisors = User::select('id', 'person_id')->with(['person:id,name,lastname,identification'])->get();
 
         return view('auth.property-edit', compact('property', 'advisors'));
@@ -226,130 +239,162 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PropertyRequest $request, $id)
+    public function update(PropertyRequest $request, Property $property)
     {
         $data = $request->validated();
 
         try {
 
-        DB::transaction(function () use ($request, $id) {
-            // Obtener la propiedad existente
-            $property = Property::findOrFail($id);
+            DB::transaction(function () use ($data, $property) {
+                // Obtener la propiedad existente
+                // dd($property);
 
-            // 1. Actualizar la dirección del dueño
-            $ownerAddress = Address::findOrFail($property->owner->addresses_id);
-            $ownerAddress->updateNormalize([
-                'state' => $request->input('ownerState'),
-                'municipality' => $request->input('ownerMunicipality'),
-                'parish' => $request->input('ownerParish'),
-                'point_reference' => $request->input('ownerPoint_reference'),
-            ]);
+                // 1. Actualizar la dirección del dueño
+                $ownerAddress = Address::findOrFail($property->owner->address_id);
+                $ownerAddress = Address::updateNormalize([
+                    'country' => $data['ownerCountry'],
+                    'state' => $data['ownerState'],
+                    'municipality' => $data['ownerMunicipality'],
+                    'parish' => $data['ownerParish'],
+                    'point_reference' => $data['ownerPoint_reference'],
+                ]);
 
-            // 2.1 Buscar o crear la persona con los datos proporcionados
-            $owner = Person::firstOrCreate(
-                [
-                    'identification' => $request->input('identification'), // Usar identificación como clave única
-                ],
-                [
-                    'name' => $request->input('name'),
-                    'lastname' => $request->input('lastname'),
-                    'birthdate' => $request->input('birthdate'),
-                    'gender' => $request->input('gender'),
-                    'phone' => $request->input('phone'),
-                    'email' => $request->input('email'),
-                ]
-            );
+                // 2. Buscar o crear la persona con los datos proporcionados
+                $owner = Person::updateOrCreate(
+                    [
+                        'id' => $property->owner->id,
+                        'identification' => $data['identification']
+                    ],
+                    [
+                        'name' => $data['name'],
+                        'lastname' => $data['lastname'],
+                        'birthdate' => $data['birthdate'],
+                        'gender' => $data['gender'],
+                        'phone' => $data['phone'],
+                        'email' => $data['email'],
+                        'address_id' => $ownerAddress->id
+                    ]
+                );
 
-            // 2.2 Actualizar el owner_id de la propiedad si es necesario
-            if ($property->owner_id !== $owner->id) {
-                $property->owner_id = $owner->id;
-                $property->save();
-            }
-
-            // 3. Actualizar la dirección de la propiedad
-            $propertyAddress = Address::updateNormalize([
-                'country' => $data['country'],
-                'state' => $data['state'],
-                'municipality' => $data['municipality'],
-                'parish' => $data['parish'],
-                'point_reference' => $data['point_reference'],
-            ]);
+                // 3. Actualizar la dirección de la propiedad
+                $propertyAddress = Address::updateNormalize([
+                    'country' => $data['country'],
+                    'state' => $data['state'],
+                    'municipality' => $data['municipality'],
+                    'parish' => $data['parish'],
+                    'point_reference' => $data['point_reference'],
+                ]);
 
 
-            $trade = Trade::firstOrCreate(
-                ['name' => $data['trade']]
-            );
+                // Cambiar la referencia a Negocio y Tipo de Propiedad
+                $trade = Trade::firstOrCreate(
+                    ['name' => $data['trade']]
+                );
 
-            $type = Type::firstOrCreate(
-                ['name' => $data['type']]
-            );
+                $type = Type::firstOrCreate(
+                    ['name' => $data['type']]
+                );
 
-            // 4. Actualizar la propiedad
-            $property->update([
-                'title' => $data['title'],
-                'price' => $data['price'],
-                'area' => $data['area'],
-                'bedrooms' => $data['bedrooms'],
-                'bathrooms' => $data['bathrooms'],
-                'parkings' => $data['parkings'],
-                'type_id' => $type->id,
-                'trade_id' => $trade->id,
-                'social_class' => $data['social_class'],
-                'description' => $data['description'],
-                'captation_start' => $data['captation_start'],
-                'captation_end' => $data['captation_end'],
-                'address_id' => $propertyAddress->id,
-            ]);
+                // 4. Actualizar la propiedad
+                $property->update([
+                    'owner_id' => $owner->id,
+                    'address_id' => $propertyAddress->id,
+                    'type_id' => $type->id,
+                    'trade_id' => $trade->id,
+                    'title' => $data['title'],
+                    'price' => $data['price'],
+                    'area' => $data['area'],
+                    'bedrooms' => $data['bedrooms'],
+                    'bathrooms' => $data['bathrooms'],
+                    'parkings' => $data['parkings'],
+                    'social_class' => $data['social_class'],
+                    'latitude' => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                    'description' => $data['description'],
+                    'captation_start' => $data['captation_start'],
+                    'captation_end' => $data['captation_end'],
+                ]);
 
-            // 5. Asociar la propiedad con los asesores
-            $advisorIds = [];
+                // 5. Asociar la propiedad con los asesores
+                $advisorIds = [];
 
-            foreach ($request->input('advisorIdentification') as $identification) {
-                $advisor = Person::where('identification', $identification)->first();
-                if ($advisor) {
-                    $advisorIds[] = $advisor->user->id; // Agregar el ID del usuario (asesor) al arreglo
+                foreach ($data['advisorIdentifications'] as $identification) {
+                    $person = Person::where('identification', $identification)->first();
+                    if ($person) {
+                        $advisorIds[] = $person->advisor->id; // Agregar el ID del usuario (asesor) al arreglo
+                    }
                 }
-            }
-            $property->users()->sync($advisorIds); // Sincronizar los asesores con la propiedad
 
-            // 6. Subir los archivos multimedia
-            if ($request->hasFile('media')) {
-                foreach ($request->file('media') as $file) {
-                    $url = $file->store('media', 'public'); // Almacena en storage/app/public/media
-                    Media::updateOrCreate([
-                        'property_id' => $property->id],
-                        ['url' => $url, 'type' => $file->getMimeType() ] // Tipo MIME del archivo
-                    );
+                $property->advisors()->sync($advisorIds); // Sincronizar los asesores con la propiedad
+
+                // 6.1 Eliminas los archivos multimedia seleccionados
+                if (isset($data['deleteMedia'])) {
+                    foreach ($data['deleteMedia'] as $fileId) {
+                        $media = Media::findOrFail($fileId);
+                        if ($media) {
+
+                            // Limpia la ruta si es necesario
+                            $filePath = str_replace('\\', '/', $media->url);
+                            // dd(Storage::disk('public')->path('media/QZEnDTBIac1BaM8oMaSPVLwyaScInL2Tw5Evs8wj.jpg'));
+
+                            // Verifica si el archivo existe y elimínalo
+                            if (Storage::disk('public')->exists($filePath)) {
+                                Storage::disk('public')->delete($filePath); // Ahora apunta correctamente al disco 'public'
+                            }
+                            // Elimina el registro de la base de datos
+                            $media->delete();
+                        }
+                    }
                 }
-            }
 
-            // Si algo falla aquí, toda la transacción se deshace.
-            session()->flash('success', 'Propiedad Actualizada Exitosamente');
-        });
 
-    } catch (\Exception $e) {
-        // Captura la excepción y envía un mensaje de error
-        session()->flash('error', 'Hubo un error al actualizar la propiedad. Por favor, intenta nuevamente.<br/>'.$e);
-        // (Opcional) Loguear el error para análisis
-        // \Log::error('Error al registrar propiedad: ' . $e->getMessage());
+                // 6.2 Agregar los archivos Multimedias subidos
+                if (isset($data['uploadMedia'])) {
+                    foreach ($data['uploadMedia'] as $file) {
+                        if ($file) {
+                            $url = $file->store('media', 'public'); // Almacena en storage/app/public/media
+                            Media::create([
+                                'property_id' => $property->id,
+                                'url' => $url,
+                                'type' => $file->getMimeType(), // Tipo MIME del archivo
+                            ]);
+                        }
+                    }
+                }
+
+
+                // Si algo falla aquí, toda la transacción se deshace.
+                session()->flash('success', 'Propiedad Actualizada Exitosamente');
+            });
+        } catch (\Exception $e) {
+            // Captura la excepción y envía un mensaje de error
+            session()->flash('error', 'Hubo un error al actualizar la propiedad. Por favor, intenta nuevamente.<br/>' . $e);
+            // (Opcional) Loguear el error para análisis
+            // \Log::error('Error al registrar propiedad: ' . $e->getMessage());
+        }
+
+        return redirect(route('dashboard.property.edit', [$property], absolute: false));
     }
-
-        return redirect::to('/dashboard/property' . $id);
-    }
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Property $property)
     {
-        $property = Property::findOrFail($id);
+        try {
+            DB::transaction(function () use ($property) {
 
-        // Autorizar la acción de ver la propiedad
-        $this->authorize('delete', $property);
+                $property->delete();
+
+                session()->flash('success', 'Propiedad eliminada exitosamente');
+            });
+        } catch (\Exception $e) {
+            // Captura la excepción y envía un mensaje de error
+            session()->flash('error', 'Hubo un error al eliminar la propiedad. Por favor, intenta nuevamente.'. $e);
+        }
 
         // Retornar la vista con la propiedad cargada
-        return view('auth.property-delete', compact('property'));
+        return view('dashboard.property.index', compact('property'));
     }
 
     public function counter()

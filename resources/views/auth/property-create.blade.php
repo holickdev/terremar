@@ -66,7 +66,7 @@
 
                 <div class="grid md:grid-cols-2 md:gap-6 mb-4">
                     <div class="relative z-0 w-full mb-4 group">
-                        <x-float-input :type="'text'" :placeholder="'Clase'" :name="'social_class'"></x-float-input>
+                        <x-float-input :type="'text'" :placeholder="'Clase Social'" :name="'social_class'"></x-float-input>
                         <x-input-error :messages="$errors->get('social_class')" class="mt-2" />
                     </div>
                     <div class="relative z-0 w-full mb-4 group">
@@ -100,7 +100,7 @@
                 <h5 class="text-lg font-semibold mt-6 mb-4">Dirección de la Propiedad</h5>
                 <!-- Otros campos de la dirección (municipio, parroquia, etc.) -->
                 <div class="grid md:grid-cols-2 md:gap-6">
-                    
+
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'País'" :name="'country'"></x-float-input>
                         <x-input-error :messages="$errors->get('country')" class="mt-2" />
@@ -223,7 +223,7 @@
                 <div class="relative z-0 w-full mb-4 group">
                     <input
                         class="block w-96 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="picture" name="media[]" multiple accept="image/*,video/*" type="file">
+                        id="picture" name="uploadMedia[]" multiple accept="image/*,video/*" type="file">
                 </div>
 
                 <button type="button" @click="step = 2"
@@ -236,10 +236,10 @@
     </form>
 
     @if (session('success'))
-        <x-modal-crud :message="session('success')" />
+        <x-modal-crud :color="'green'" :message="session('success')" />
         <script src="{{ asset('js/custom/modal.js') }}"></script>
     @elseif (session('error'))
-        <x-modal-crud :message="session('error')" />
+        <x-modal-crud :color="'red'" :message="session('error')" />
         <script src="{{ asset('js/custom/modal.js') }}"></script>
     @endif
 

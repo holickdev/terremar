@@ -21,7 +21,7 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
-    
+
     <link href="{{ asset('css/library/flowbite.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/library/fontawesome.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/library/solid.css') }}" />
@@ -87,7 +87,7 @@
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Propiedades</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('advisor.create') }}"
+                                    <a href="{{ route('dashboard.advisor.create') }}"
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Asesores</a>
                                 </li>
                                 <li>
@@ -120,7 +120,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('advisor.index') }}"
+                            <a href="{{ route('dashboard.advisor.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
                                     class="flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white

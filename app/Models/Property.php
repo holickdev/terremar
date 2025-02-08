@@ -34,6 +34,8 @@ class Property extends Model
         'bedrooms',
         'bathrooms',
         'parkings',
+        'latitude',
+        'longitude',
         'captation_start',
         'captation_end',
         'address_id'
@@ -111,7 +113,7 @@ class Property extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(Person::class, 'owner_id');
+        return $this->belongsTo(Owner::class, 'owner_id');
     }
 
     /**
@@ -148,8 +150,12 @@ class Property extends Model
         return $this->hasMany(Media::class, 'property_id');
     }
 
-    public function advisors()
-    {
-        return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'id', 'id', 'user_id');
+    // public function advisors()
+    // {
+    //     return $this->hasManyThrough(User::class, UserProperty::class, 'property_id', 'id', 'id', 'user_id');
+    // }
+
+    public function advisors(){
+            return $this->belongsToMany(Advisor::class, 'user_property', 'property_id', 'user_id');
     }
 }

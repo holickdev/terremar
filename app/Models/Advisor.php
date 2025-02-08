@@ -9,7 +9,7 @@ class Advisor extends User
 {
     use HasFactory;
 
-        /**
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -22,28 +22,41 @@ class Advisor extends User
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'person_id',
         'email',
         'role',
+        'picture',
         'password',
     ];
 
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'user_property', 'user_id', 'property_id');
+    }
+
     public static function getAdvisors()
     {
-        return Advisor::select('id','email')->with('person:id,name,lastname,identification,phone')->withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type', 'Terreno');
-            },
-            'properties as others' => function ($query) {
-                $query->where('type', 'Others');
-            },
-        ])->get();
+        return Advisor::select(['id', 'email', 'person_id'])
+            ->with('person:id,name,lastname,identification,phone')
+            ->withCount([
+                'properties as houses' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Others');
+                },
+            ])->get();
     }
 }
-

@@ -3,11 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Models\Advisor;
 use App\Models\Person;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProfileUpdateRequest extends FormRequest
+class AdvisorUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +18,9 @@ class ProfileUpdateRequest extends FormRequest
 
     public function rules(): array
     {
-        $userId = $this->user()->id;
-        $personId = $this->user()->person_id; // Si existe una relación con person_id
+        $userId = $this->advisor->id;
+        $personId = $this->advisor->person_id; // Si existe una relación con person_id        }
+        // dd($userId,$personId);
         
         return [
             'name' => 'required|string|max:255',

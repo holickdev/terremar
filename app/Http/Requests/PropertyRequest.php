@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PropertyRequest extends FormRequest
 {
@@ -21,7 +22,13 @@ class PropertyRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Obtén el ID del propietario actual
+        $ownerId = $this->property->owner->id ?? null;
+        // dd($this);
+
+
         return [
+            'ownerCountry' => 'required|string|max:100',
             'ownerState' => 'required|string|max:100',
             'ownerMunicipality' => 'required|string|max:100',
             'ownerParish' => 'required|string|max:100',
@@ -29,15 +36,27 @@ class PropertyRequest extends FormRequest
             'name' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
             'birthdate' => 'required|date',
-            'identification' => 'required|string|max:20',
+            'identification' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('person', 'identification')->ignore($ownerId),
+            ],
             'gender' => 'required|string|in:male,female,other',
             'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255|unique:person,email',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('person', 'email')->ignore($ownerId),
+            ],
             'country' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'municipality' => 'required|string|max:100',
             'parish' => 'required|string|max:100',
             'point_reference' => 'nullable|string|max:255',
+            'longitude' => 'nullable|numeric',
+            'latitude' => 'nullable|numeric',
             'title' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'area' => 'required|numeric|min:0',
@@ -52,7 +71,10 @@ class PropertyRequest extends FormRequest
             'captation_end' => 'nullable|date|after_or_equal:captation_start',
             'advisorIdentifications' => 'required|array',
             'advisorIdentifications.*' => 'exists:person,identification',
-            'media.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,avi|max:5120', // Cada archivo debe ser imagen o video, máx. 5MB
+            'uploadMedia' => 'sometimes:nullable|array',
+            'uploadMedia.*' => 'file|mimes:jpeg,png,jpg,gif,mp4,avi|max:5120', // Cada archivo debe ser imagen o video, máx. 5MB
+            'deleteMedia' => 'sometimes|nullable|array',
+            'deleteMedia.*' => 'nullable|integer|exists:media,id', // Asegúrate de que los IDs existan en la tabla `media`
         ];
     }
 }
