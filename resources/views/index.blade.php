@@ -22,15 +22,15 @@
 
                                     <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'trade'" :placeholder="'Negocios'" :options="$trades" />
+                                            <x-select-input :name="'trade'" :placeholder="'Negocios'" :options="$trades" />
                                         </div>
 
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'type'" :placeholder="'Tipo'" :options="$types" />
+                                            <x-select-input :name="'type'" :placeholder="'Tipo'" :options="$types" />
                                         </div>
 
                                         <div class="flex flex-col">
-                                            <x-float-select :name="'municipality'" :placeholder="'Municipio'" :options="$municipalities" />
+                                            <x-select-input :name="'municipality'" :placeholder="'Municipio'" :options="$municipalities" />
                                         </div>
                                         <div class="md:col-start-3 flex flex-col mt-3 grid w-full grid-cols-2 justify-end gap-3">
                                             <button

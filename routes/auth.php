@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/advisor/{advisor}', [AdvisorController::class, 'show'])->name('dashboard.advisor.show');
     Route::get('/dashboard/advisor/{advisor}/edit', [AdvisorController::class, 'edit'])->name('dashboard.advisor.edit');
     Route::put('/dashboard/advisor/{advisor}/', [AdvisorController::class, 'update'])->name('dashboard.advisor.update');
+    Route::get('/dashboard/advisor/{advisor}/property', [AdvisorController::class, 'property'])->name('dashboard.advisor.property');
 
     // Advisor CRUD
     Route::post('/dashboard/register', [RegisteredUserController::class, 'store'])->name('register.store');

@@ -55,7 +55,9 @@ class Advisor extends User
                     $query->whereRelation('type', 'name', 'Terreno');
                 },
                 'properties as others' => function ($query) {
-                    $query->whereRelation('type', 'name', 'Others');
+                    $query->whereRelation('type', function ($q) {
+                        $q->whereNotIn('name', ['Casa', 'Apartamento', 'Terreno']);
+                    });
                 },
             ])->get();
     }

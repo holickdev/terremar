@@ -29,79 +29,39 @@
                     </div>
 
                     <!-- Cédula -->
-                    <div class="sm:col-span-2">
-                        <label for="identification"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula</label>
-                        <input type="text" name="identification" id="identification"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->person->identification }}" required>
-                        <x-input-error :messages="$errors->get('identification')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group sm:col-span-2">
+                        <x-float-input :placeholder="'Cédula'" :name="'identification'" :type="'text'" :value="$advisor->person->identification" />
                     </div>
 
                     <!-- Nombre -->
-                    <div>
-                        <label for="name"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-                        <input type="text" name="name" id="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->person->name }}" required>
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :placeholder="'Nombre'" :name="'name'" :type="'text'" :value="$advisor->person->name" />
                     </div>
 
                     <!-- Apellido -->
-                    <div>
-                        <label for="lastname"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
-                        <input type="text" name="lastname" id="lastname"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->person->lastname }}" required>
-                        <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :placeholder="'Apellido'" :name="'lastname'" :type="'text'" :value="$advisor->person->lastname" />
                     </div>
 
                     <!-- Email -->
-                    <div>
-                        <label for="email"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" name="email" id="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->email }}" required>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :placeholder="'Email'" :name="'email'" :type="'email'" :value="$advisor->email" />
                     </div>
 
                     <!-- Teléfono -->
-                    <div>
-                        <label for="phone"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
-                        <input type="tel" name="phone" id="phone"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->person->phone }}" required>
-                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :placeholder="'Teléfono'" :name="'phone'" :type="'tel'" :value="$advisor->person->phone" />
                     </div>
 
                     <!-- Fecha de Nacimiento -->
-                    <div>
-                        <label for="birthdate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de
-                            Nacimiento</label>
-                        <input type="date" name="birthdate" id="birthdate"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                            value="{{ $advisor->person->birthdate }}" required>
-                        <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-input :placeholder="'Fecha de Nacimiento'" :name="'birthdate'" :type="'date'" :value="$advisor->person->birthdate" />
                     </div>
 
                     <!-- Género -->
-                    <div>
-                        <label for="gender"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Género</label>
-                        <select name="gender" id="gender"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                            <option value="value1" {{ $advisor->person->gender == 'value1' ? 'selected' : '' }}>Masculino
-                            </option>
-                            <option value="value2" {{ $advisor->person->gender == 'value2' ? 'selected' : '' }}>Femenino
-                            </option>
-                            <option value="value3" {{ $advisor->person->gender == 'value3' ? 'selected' : '' }}>Otros
-                            </option>
-                        </select>
-                        <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+                    <div class="relative z-0 w-full mb-4 group">
+                        <x-float-select :name="'gender'" :placeholder="'Género'"
+                        :options="$gender" :selected="$advisor->person->gender" > </x-float-select>
                     </div>
                 </div>
 

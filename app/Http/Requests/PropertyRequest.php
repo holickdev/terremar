@@ -26,7 +26,6 @@ class PropertyRequest extends FormRequest
         $ownerId = $this->property->owner->id ?? null;
         // dd($this);
 
-
         return [
             'ownerCountry' => 'required|string|max:100',
             'ownerState' => 'required|string|max:100',
@@ -42,7 +41,7 @@ class PropertyRequest extends FormRequest
                 'max:20',
                 Rule::unique('person', 'identification')->ignore($ownerId),
             ],
-            'gender' => 'required|string|in:male,female,other',
+            'gender' => 'required|string|in:Masculino,Femenino,Otro',
             'phone' => 'required|string|max:20',
             'email' => [
                 'required',
@@ -69,7 +68,7 @@ class PropertyRequest extends FormRequest
             'description' => 'required|string|max:2000',
             'captation_start' => 'nullable|date',
             'captation_end' => 'nullable|date|after_or_equal:captation_start',
-            'advisorIdentifications' => 'required|array',
+            'advisorIdentifications' => 'sometimes|required|array',
             'advisorIdentifications.*' => 'exists:person,identification',
             'uploadMedia' => 'sometimes:nullable|array',
             'uploadMedia.*' => 'file|mimes:jpeg,png,jpg,gif,mp4,avi|max:5120', // Cada archivo debe ser imagen o video, máx. 5MB

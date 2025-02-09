@@ -48,8 +48,9 @@ class AdvisorController extends Controller
     public function show($id)
     {
         $advisor = User::findOrFail($id);
+        $gender = ['Masculino','Femenino','Otro'];
 
-        return view('auth.advisor-show', compact('advisor'));
+        return view('auth.advisor-show', compact('advisor','gender'));
     }
 
     /**
@@ -58,8 +59,9 @@ class AdvisorController extends Controller
     public function edit($id)
     {
         $advisor = User::findOrFail($id);
+        $gender = ['Masculino','Femenino','Otro'];
 
-        return view('auth.advisor-edit', compact('advisor'));
+        return view('auth.advisor-edit', compact('advisor','gender'));
     }
 
     /**
@@ -125,7 +127,7 @@ class AdvisorController extends Controller
     }
 
     public function property($id){
-        $user = User::with('person:id,name,lastname')->findOrFail($id);
+        $user = Advisor::with('person:id,name,lastname')->findOrFail($id);
 
         $properties = $user->properties;
 
@@ -133,7 +135,7 @@ class AdvisorController extends Controller
 
         $action = "Agregar Propiedad al Asesor";
 
-        return view('auth.properties', compact('properties','title','action'));
+        return view('auth.advisor-property', compact('properties','title','action'));
     }
 
 

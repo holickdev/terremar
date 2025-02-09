@@ -21,7 +21,6 @@ class User extends Authenticatable
         'id',
         'person_id',
         'email',
-        'role',
         'picture',
         'password',
     ];
@@ -50,18 +49,10 @@ class User extends Authenticatable
     }
 
     const ROLE_ADMIN = 'admin';
+    const ROLE_BLOGGER = 'blogger';
     const ROLE_GERENTE = 'gerente';
     const ROLE_USER = 'user';
 
-    public function isAdmin()
-    {
-        return $this->role->name === self::ROLE_ADMIN;
-    }
-
-    public function isGerente()
-    {
-        return $this->role->name === self::ROLE_GERENTE;
-    }
 
     public function person()
     {
@@ -76,6 +67,21 @@ class User extends Authenticatable
     public function property_users()
     {
         return $this->hasMany(UserProperty::class, 'user_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->name === self::ROLE_ADMIN;
+    }
+
+    public function isBlogger()
+    {
+        return $this->role->name === self::ROLE_BLOGGER;
+    }
+
+    public function isGerente()
+    {
+        return $this->role->name === self::ROLE_GERENTE;
     }
 
     public static function getAdvisors()

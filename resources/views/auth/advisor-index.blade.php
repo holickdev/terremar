@@ -91,7 +91,7 @@
                 <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{number_format($advisor->person->identification, 0, '', '.')}}</td>
                 <td>{{$advisor->person->name}}</td>
                 <td>{{$advisor->person->lastname}}</td>
-                <td>{{$advisor->person->email}}</td>
+                <td>{{$advisor->email}}</td>
                 <td>{{$advisor->person->phone}}</td>
                 <td>{{$advisor->houses}}</td>
                 <td>{{$advisor->apartments}}</td>

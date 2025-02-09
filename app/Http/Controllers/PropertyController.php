@@ -76,12 +76,13 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $advisors = User::select('id', 'person_id')->with(['person:id,name,lastname,identification'])->get();
+        $advisors = Auth::user()->isAdmin()
+            ? User::with('person:id,name,lastname,identification')->get()
+            : null;
 
-        return view('auth.property-create', [
-            'advisors' => $advisors
-        ]);
+        return view('auth.property-create', compact('advisors'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -90,6 +91,7 @@ class PropertyController extends Controller
     {
         // Validar los datos del formulario
         $data = $request->validated();
+        $data['user'] = $request->user();
 
         try {
             DB::transaction(function () use ($data) {
@@ -154,14 +156,16 @@ class PropertyController extends Controller
                 ]);
 
                 // 5. Asociar la propiedad con los asesores
-                $advisorIds = [];
+                $advisorIds = collect($data['advisorIdentifications'] ?? [])
+                    ->map(fn($identification) => Person::where('identification', $identification)->first()?->user->id)
+                    ->filter()
+                    ->toArray();
 
-                foreach ($data['advisorIdentifications'] as $identification) {
-                    $advisor = Person::where('identification', $identification)->first();
-                    if ($advisor) {
-                        $advisorIds[] = $advisor->user->id; // Agregar el ID del usuario (asesor) al arreglo
-                    }
+                // Si no hay asesores seleccionados, asociar el usuario actual
+                if (empty($advisorIds)) {
+                    $advisorIds[] = $data['user']->id;
                 }
+
                 $property->advisors()->sync($advisorIds);
 
                 // 6. Subir los archivos multimedia
@@ -231,7 +235,9 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        $advisors = User::select('id', 'person_id')->with(['person:id,name,lastname,identification'])->get();
+        $advisors = Auth::user()->isAdmin()
+            ? User::with('person:id,name,lastname,identification')->get()
+            : null;
 
         return view('auth.property-edit', compact('property', 'advisors'));
     }
@@ -242,6 +248,7 @@ class PropertyController extends Controller
     public function update(PropertyRequest $request, Property $property)
     {
         $data = $request->validated();
+        $data['user'] = $request->user();
 
         try {
 
@@ -316,13 +323,14 @@ class PropertyController extends Controller
                 ]);
 
                 // 5. Asociar la propiedad con los asesores
-                $advisorIds = [];
+                $advisorIds = collect($data['advisorIdentifications'] ?? [])
+                    ->map(fn($identification) => Person::where('identification', $identification)->first()?->user->id)
+                    ->filter()
+                    ->toArray();
 
-                foreach ($data['advisorIdentifications'] as $identification) {
-                    $person = Person::where('identification', $identification)->first();
-                    if ($person) {
-                        $advisorIds[] = $person->advisor->id; // Agregar el ID del usuario (asesor) al arreglo
-                    }
+                // Si no hay asesores seleccionados, asociar el usuario actual
+                if (empty($advisorIds)) {
+                    $advisorIds[] = $data['user']->id;
                 }
 
                 $property->advisors()->sync($advisorIds); // Sincronizar los asesores con la propiedad
@@ -366,6 +374,7 @@ class PropertyController extends Controller
                 // Si algo falla aquí, toda la transacción se deshace.
                 session()->flash('success', 'Propiedad Actualizada Exitosamente');
             });
+
         } catch (\Exception $e) {
             // Captura la excepción y envía un mensaje de error
             session()->flash('error', 'Hubo un error al actualizar la propiedad. Por favor, intenta nuevamente.<br/>' . $e);
@@ -390,7 +399,7 @@ class PropertyController extends Controller
             });
         } catch (\Exception $e) {
             // Captura la excepción y envía un mensaje de error
-            session()->flash('error', 'Hubo un error al eliminar la propiedad. Por favor, intenta nuevamente.'. $e);
+            session()->flash('error', 'Hubo un error al eliminar la propiedad. Por favor, intenta nuevamente.' . $e);
         }
 
         // Retornar la vista con la propiedad cargada
