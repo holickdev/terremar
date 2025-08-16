@@ -10,13 +10,22 @@ class FaqController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function publicIndex()
     {
         $faq = Faq::all();
 
         return view('faq', [
             'faq' => $faq
         ]);
+    }
+
+    public function index()
+    {
+        $faq = Faq::all();
+        return view('auth.faq-index', [
+            'faq' => $faq,
+            'title' => "Preguntas Frecuentes",
+             'action' => '/']);
     }
 
     /**

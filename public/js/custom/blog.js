@@ -101,7 +101,6 @@ window.addEventListener('load', function () {
         });
 
         document.getElementById('toggleLinkButton').addEventListener('click', () => {
-            const url = window.prompt('Enter image URL:', 'https://flowbite.com');
             editor.chain().focus().toggleLink({ href: url }).run();
         });
         document.getElementById('removeLinkButton').addEventListener('click', () => {
@@ -266,11 +265,14 @@ window.addEventListener('load', function () {
         });
 
         const bodyInput = document.querySelector("#body");
+        if ( bodyInput.value ) {
+            editor.commands.setContent(bodyInput.value)
+        }
 
         document.getElementById('blog_form').addEventListener('submit', () => {
             const body = editor.getHTML();
             bodyInput.value = body !== "<p></p>" ? body : "";
         });
-        
+
     }
 })

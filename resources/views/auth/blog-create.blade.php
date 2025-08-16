@@ -10,7 +10,7 @@
         <h4 class="mb-1 text-2xl font-bold dark:text-white">Agregar Blog</h4>
 
         <!-- Contenedor de Alpine.js -->
-        <form id="blog_form" method="POST" action="{{ route('blog_store') }}" enctype="multipart/form-data"
+        <form id="blog_form" method="POST" action="{{ route('dashboard.blog.store') }}" enctype="multipart/form-data"
         class="relative mx-auto w-full overflow-hidden">
             @csrf
 

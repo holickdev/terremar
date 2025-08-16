@@ -53,42 +53,53 @@ class Person extends Model
         return $this->hasOne(User::class);
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'owner_id');
+    }
+
     public static function getAdvisors()
     {
-        return User::with('person')->withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type', 'Terreno');
-            },
-            'properties as others' => function ($query) {
-                $query->where('type', 'Others');
-            },
-        ])->get();
+        return User::with('person')
+            ->withCount([
+                'properties as houses' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Others');
+                },
+            ])->get();
     }
+
 
     public static function getOwners()
     {
-        return Person::doesntHave('User')->withCount([
-            'properties as houses' => function ($query) {
-                $query->where('type', 'Casa');
-            },
-            'properties as apartments' => function ($query) {
-                $query->where('type', 'Apartamento');
-            },
-            'properties as terrains' => function ($query) {
-                $query->where('type', 'Terreno');
-            },
-            'properties as others' => function ($query) {
-                $query->where('type', 'Others');
-            },
-        ])->get();
+        return Person::doesntHave('advisor')->withCount([
+                'properties as houses' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Casa');
+                },
+                'properties as apartments' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Apartamento');
+                },
+                'properties as terrains' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Terreno');
+                },
+                'properties as others' => function ($query) {
+                    $query->whereRelation('type', 'name', 'Others');
+                },
+            ])->get();
     }
-
 }
 
 

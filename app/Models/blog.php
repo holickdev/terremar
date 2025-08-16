@@ -50,8 +50,8 @@ class Blog extends Model
         ];
     }
 
-    public function user()
+    public function blogger()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Blogger::class, 'user_id');
     }
 }

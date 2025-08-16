@@ -13,7 +13,9 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
-            },
+            }, aspectRatio: {
+                '3/4': '3 / 4',
+            }
         },
     },
     plugins: [forms],

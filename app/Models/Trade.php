@@ -12,8 +12,6 @@ class Trade extends Model
 
     use HasFactory;
 
-    protected $table = 'Trades';
-
     /**
      * The attributes that are mass assignable.
      *

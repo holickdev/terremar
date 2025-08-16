@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\ContactMessage;
+use Illuminate\Support\Facades\Mail;
 
 Route::middleware('guest')->group(function () {
 
@@ -39,9 +41,6 @@ Route::middleware('guest')->group(function () {
     ->name('password.store');
 });
 
-use App\Mail\ContactMessage;
-use Illuminate\Support\Facades\Mail;
-
 Route::middleware('auth')->group(function () {
 
     Route::get('dashboard/contact', function () {
@@ -61,10 +60,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/faq', [DashboardController::class, 'faq'])->name('faq_dash');
 
     Route::prefix('dashboard/blog')->group(function () {
-        Route::get('/', [DashboardController::class, 'blog'])->name('blog_dash');
-        Route::get('/create', [BlogController::class, 'create'])->name('blog.create');
-        Route::post('/store', [BlogController::class, 'store'])->name('blog_store');
-        Route::get('/{title}', [BlogController::class, 'dash_show'])->name('blog_dash_view');
+        Route::get('/', [BlogController::class, 'index'])->name('dashboard.blog.index');
+        Route::get('/create', [BlogController::class, 'create'])->name('dashboard.blog.create');
+        Route::post('/store', [BlogController::class, 'store'])->name('dashboard.blog.store');
+        Route::get('/{title}', [BlogController::class, 'show'])->name('dashboard.blog.show');
+        Route::get('/{title}/edit', [BlogController::class, 'edit'])->name('dashboard.blog.edit');
+        Route::put('/{title}', [BlogController::class, 'update'])->name('dashboard.blog.update');
+        Route::delete('/{title}', [BlogController::class, 'destroy'])->name('dashboard.blog.destroy');
     });
 
 

@@ -10,27 +10,30 @@
         <h4 class="mb-1 text-2xl font-bold dark:text-white">Agregar Blog</h4>
 
         <!-- Contenedor de Alpine.js -->
-        <form id="blog_form" method="POST" action="{{ route('blog_store') }}" enctype="multipart/form-data"
-        class="relative mx-auto w-full overflow-hidden">
+        <form id="blog_form" class="p-4" method="POST" action="" enctype="multipart/form-data"
+            class="relative mx-auto w-full overflow-hidden">
+            @method('PUT')
             @csrf
 
             <div class="grid md:grid-cols-2 md:gap-6 mb-4">
 
                 <div class="relative z-0 w-full mb-4 group">
-                    <x-float-input :type="'text'" :placeholder="'Titulo'" :name="'title'"></x-float-input>
+                    <x-float-input :type="'text'" :placeholder="'Titulo'" :name="'title'"
+                        value="{{ $blog->title }}"></x-float-input>
                 </div>
                 <div class="relative z-0 w-full mb-4 group">
-                    <x-float-input :type="'text'" :placeholder="'Tipo'" :name="'type'"></x-float-input>
+                    <x-float-input :type="'text'" :placeholder="'Tipo'" :name="'type'"
+                        value="{{ $blog->type }}"></x-float-input>
                 </div>
             </div>
 
             <div class="grid md:gap-6 mb-4">
                 <div class="relative z-0 w-full mb-4 group">
-                    <x-float-input :type="'text'" :placeholder="'Decripcion'" :name="'description'"></x-float-input>
+                    <x-float-input :type="'text'" :placeholder="'Decripcion'" :name="'description'" value="{{$blog->description}}"></x-float-input>
                 </div>
             </div>
 
-            <input type="hidden" name="body" id="body">
+            <input type="hidden" name="body" id="body" value="{{$blog->body}}">
 
             <div class="grid md:gap-6 mb-4">
 

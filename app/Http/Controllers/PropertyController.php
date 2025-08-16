@@ -324,7 +324,10 @@ class PropertyController extends Controller
 
                 // 5. Asociar la propiedad con los asesores
                 $advisorIds = collect($data['advisorIdentifications'] ?? [])
-                    ->map(fn($identification) => Person::where('identification', $identification)->first()?->user->id)
+                    ->map(function ($identification) {
+                        $person = Person::where('identification', $identification)->first();
+                        return $person ? $person->advisor->id ?? null : null;
+                    })
                     ->filter()
                     ->toArray();
 
@@ -374,7 +377,6 @@ class PropertyController extends Controller
                 // Si algo falla aquí, toda la transacción se deshace.
                 session()->flash('success', 'Propiedad Actualizada Exitosamente');
             });
-
         } catch (\Exception $e) {
             // Captura la excepción y envía un mensaje de error
             session()->flash('error', 'Hubo un error al actualizar la propiedad. Por favor, intenta nuevamente.<br/>' . $e);
@@ -403,7 +405,7 @@ class PropertyController extends Controller
         }
 
         // Retornar la vista con la propiedad cargada
-        return view('dashboard.property.index', compact('property'));
+        return redirect(route('dashboard.property.index'));
     }
 
     public function counter()

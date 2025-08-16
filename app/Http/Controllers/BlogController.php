@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,20 @@ class BlogController extends Controller
     {
         $blogs = Blog::Paginate(8);
 
+        return view('auth.blog-index', [
+            'blogs' => $blogs,
+            'title' => "Todos los Blogs",
+            'action' => "Agregar Blog"
+        ]);
+    }
+
+    public function publicIndex()
+    {
+        $blogs = Blog::Paginate(8);
+
         return view('blog', compact('blogs'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,41 +63,42 @@ class BlogController extends Controller
         $validatedData['user_id'] = Auth::id();
 
         // Crear el registro en la base de datos
-        $model = Blog::create($validatedData);
+        Blog::create($validatedData);
 
         session()->flash('success', 'Blog Creado Exitosamente');
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('new_blog');
+        return redirect()->route('dashboard.blog.create');
     }
 
     /**
      * Display the specified resource.
      */
-    public function dash_show($title)
-    {
-        $blog = Blog::where('title', $title)->first();
-
-        if (!$blog) {
-            abort(404, 'Blog no encontrado');
-        }
-
-        return view('auth.blog', [
-            'blog' => $blog,
-            'title' => "Todos los Blogs",
-            'action' => "Agregar Blog"
-        ]);
-    }
-
     public function show($title)
     {
         $blog = Blog::where('title', $title)->first();
 
-        $related = Blog::where('type', $blog->type)->take(4)->get();
+        if (!$blog) {
+            abort(404, 'Blog no encontrado');
+        }
+
+        return view('auth.blog-show', [
+            'blog' => $blog,
+            'title' => $blog->title,
+        ]);
+    }
+
+    public function publicShow($title)
+    {
+        $blog = Blog::where('title', $title)->first();
 
         if (!$blog) {
             abort(404, 'Blog no encontrado');
         }
+
+        $related = Blog::where('type', $blog->type)->take(4)->get();
+
+
 
         return view('blog-view', [
             'blog' => $blog,
@@ -97,9 +111,17 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blog $Blog)
+    public function edit($title)
     {
-        //
+        $blog = Blog::where('title', $title)->first();
+
+        if (!$blog) {
+            abort(404, 'Blog no encontrado');
+        }
+
+        return view('auth.blog-edit', [
+            'blog' => $blog
+        ]);
     }
 
     /**
@@ -113,8 +135,24 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $Blog)
+    public function destroy($title)
     {
-        //
+        $blog = Blog::where('title', $title)->first();
+
+
+        try {
+            DB::transaction(function () use ($blog) {
+
+                $blog->delete();
+
+                session()->flash('success', 'Propiedad eliminada exitosamente');
+            });
+        } catch (\Exception $e) {
+            // Captura la excepción y envía un mensaje de error
+            session()->flash('error', 'Hubo un error al eliminar el blog. Por favor, intenta nuevamente.' . $e);
+        }
+
+        // Retornar la vista con la propiedad cargada
+        return redirect(route('dashboard.blog.index'));
     }
 }

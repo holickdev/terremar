@@ -251,6 +251,40 @@
                     @endif
 
                     <h5 class="text-lg font-semibold mt-6 mb-4">Imagenes del Inmueble</h5>
+
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                    @foreach ($property->media as $media)
+                        <label class="relative block cursor-pointer group">
+                            @if (str_starts_with($media->type, 'image/'))
+                                <img src="{{ asset('storage/' . $media->url) }}" alt="Imagen"
+                                    class="rounded-lg border-2 border-gray-300 group-hover:border-blue-500 transition duration-200">
+                            @elseif (str_starts_with($media->type, 'video/'))
+                                <video
+                                    class="rounded-lg border-2 border-gray-300 group-hover:border-blue-500 transition duration-200"
+                                    controls>
+                                    <source src="{{ asset('storage/' . $media->url) }}" type="{{ $media->type }}">
+                                    Tu navegador no soporta la reproducción de videos.
+                                </video>
+                            @endif
+
+                            <!-- Checkbox oculto -->
+                            <input type="checkbox" name="deleteMedia[]" value="{{ $media->id }}"
+                                class="absolute top-0 left-0 w-full h-full opacity-0 peer">
+                            <x-input-error :messages="$errors->get('deleteMedia[]')" class="mt-2" />
+
+                            <!-- Indicador de selección -->
+                            <span
+                                class="absolute top-2 right-2 w-6 h-6 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center opacity-0 peer-checked:opacity-100 peer-checked:border-blue-500 transition duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
                     <div class="relative z-0 w-full mb-4 group">
                         <input
                             class="block w-96 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"

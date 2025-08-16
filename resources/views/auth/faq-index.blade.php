@@ -1,42 +1,115 @@
-<!-- resources/views/home.blade.php -->
 @extends('layouts.board')
 
-@section('title', 'WF1') <!-- Opcional: si quisieras personalizar el título en el head -->
+@section('title', 'WF1')
 
 @section('content')
     <section>
-        <div class=" mx-auto px-5 bg-white min-h-sceen">
-            <div class="flex flex-col items-center">
-                <h2 class="font-bold text-5xl mt-5 tracking-tight">
-                    FAQ
-                </h2>
-                <p class="text-neutral-500 text-xl mt-3">
-                    Frequenty asked questions
-                </p>
-            </div>
-            <div class="grid divide-y divide-neutral-200 w-full mx-auto mt-8">
+        <x-crud-header :title="$title" :action="$action" />
 
+        <table id="search-table">
+            <thead class="bg-white dark:bg-gray-700">
+                <tr class="flex">
+                    <th class="p-2 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        <span class="flex items-center">
+                            Pregunta
+                            <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                            </svg>
+                        </span>
+                    </th>
+                    <th class="p-2 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        <span class="flex items-center">
+                            Respuesta
+                            <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                            </svg>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 @foreach ($faq as $aq)
-                    <div class="py-5">
-                        <details class="group">
-                            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                                <span>{{ $aq->question }}</span>
-                                <span class="transition group-open:rotate-180">
-                                    <svg fill="none" height="24" shape-rendering="geometricPrecision"
-                                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="1.5" viewBox="0 0 24 24" width="24">
-                                        <path d="M6 9l6 6 6-6"></path>
-                                    </svg>
-                                </span>
-                            </summary>
-                            <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
-                                {{ $aq->answer }}
-                            </p>
-                        </details>
-                    </div>
+                    <tr onclick="" class="cursor-pointer">
+                        <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $aq->question }}</td>
+                        <td class="p-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $aq->answer }}</td>
+                    </tr>
                 @endforeach
+            </tbody>
+        </table>
+    </section>
 
+
+
+    <!-- Modal toggle -->
+    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button">
+        Toggle modal
+    </button>
+
+    <!-- Main modal -->
+    <div id="crud-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <!-- Modal header -->
+                <div
+                    class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Actualizar Pregunta Frecuente
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="crud-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="question"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input type="text" name="question" id="question"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Type product name" required="">
+                        </div>
+                        <div class="col-span-2">
+                            <label for="answer"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
+                                Description</label>
+                            <textarea id="answer" rows="4" name="answer"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Write product description here"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Add new product
+                    </button>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+
+
+    <!-- Scripts para Flowbite DataTables -->
 @endsection

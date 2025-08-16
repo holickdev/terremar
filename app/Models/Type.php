@@ -12,8 +12,6 @@ class Type extends Model
 
     use HasFactory;
 
-    protected $table = 'Types';
-
     /**
      * The attributes that are mass assignable.
      *

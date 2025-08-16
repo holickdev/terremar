@@ -6,38 +6,67 @@
     <section>
         <x-crud-header :title="$title" :action="$action" />
         <section  class="flex flex-wrap px-4">
-            @for ($i = 0; $i < 15; $i++)
-                <div class="w-1/2 p-2 lg:flex">
-                    <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                        style="background-image: url({{asset('img/inmueble-0.jpeg')}})" title="Woman holding a mug">
-                    </div>
-                    <div
-                        class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                        <div class="mb-8">
-                            <p class="text-sm text-gray-600 flex items-center">
-                                <svg class="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path
-                                        d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
-                                </svg>
-                                Members only
-                            </p>
-                            <div class="text-gray-900 font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-                            <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                            </p>
-                        </div>
-                        <div class="flex items-center">
-                            <img class="w-10 h-10 rounded-full mr-4" src="{{asset('img/Arnoldo.jpg')}}"
-                                alt="Avatar of Jonathan Reinink">
-                            <div class="text-sm">
-                                <p class="text-gray-900 leading-none">Jonathan Reinink</p>
-                                <p class="text-gray-600">Aug 18</p>
+            <div id="blog" class="bg-gray-100 px-4 xl:px-4 py-14">
+                <div class="mx-auto container">
+                    <div tabindex="0" aria-label="Group of cards" class="focus:outline-none mt-12 lg:mt-24">
+                        <div class="">
+                            {{-- <div tabindex="0" class="focus:outline-none" aria-label="card 1">
+                            <img role="img" aria-label="code editor" tabindex="0" class="focus:outline-none w-full" src="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png" alt="code editor" />
+                            <div class="py-4 px-8 w-full flex justify-between bg-indigo-700">
+                                <p  tabindex="0" class="focus:outline-none text-sm text-white font-semibold tracking-wide">Bruce Wayne</p>
+                                <p tabindex="0" class="focus:outline-none text-sm text-white font-semibold tracking-wide">13TH Oct, 2020</p>
                             </div>
+                            <div class="bg-white dark:bg-gray-800 px-10 py-6 rounded-bl-3xl rounded-br-3xl">
+                                <h1 tabindex="0" class="focus:outline-none text-4xl text-gray-900 dark:text-white font-semibold tracking-wider">Transactions</h1>
+                                <p tabindex="0" class="focus:outline-none text-gray-700 dark:text-gray-200 text-base lg:text-lg lg:leading-8 tracking-wide mt-6 w-11/12">Find the latest events updates or create events, concerts, conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.</p>
+                                <div class="w-full flex justify-end" >
+                                    <button class="focus:outline-none focus:ring-2 ring-offset-2 focus:ring-gray-600 hover:opacity-75 mt-4 justify-end flex items-center cursor-pointer">
+                                        <span class=" text-base tracking-wide text-indigo-700">Read more</span>
+                                       <img class="ml-3 lg:ml-6" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/2-column-with-main-and-supporting-svg1.svg" alt="arrow"/>
+                                    </button>
+                                </div>
+                                <div class="h-5 w-2"></div>
+                            </div>
+                        </div> --}}
+                            <div>
+                                <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+                                    @foreach ($blogs as $blog)
+                                    <a href="{{route('dashboard.blog.show', $blog->title)}}">
+
+
+                                        <div tabindex="0" class="focus:outline-none " aria-label="card 2">
+                                            <img tabindex="0" role="img" aria-label="gaming" class="focus:outline-none w-full"
+                                                src="{{ asset('storage/' . $blog->picture)}}"
+                                                alt="games" />
+                                            <div class="py-2 px-4 w-full flex justify-between bg-indigo-700">
+                                                {{-- <p tabindex="0"
+                                                    class="focus:outline-none  text-sm text-white font-semibold tracking-wide">{{$blog->user->person->name}} {{$blog->user->person->lastname}}</p> --}}
+                                                <p tabindex="0"
+                                                    class="focus:outline-none text-sm text-white font-semibold tracking-wide">{{$blog->created_at}}</p>
+                                            </div>
+                                            <div class="bg-white dark:bg-gray-800 px-3 lg:px-6 py-4 rounded-bl-3xl rounded-br-3xl">
+                                                <h1 tabindex="0"
+                                                    class="focus:outline-none text-lg text-gray-900 dark:text-white font-semibold tracking-wider">
+                                                    {{$blog->title}}</h1>
+                                                <p tabindex="0"
+                                                    class="focus:outline-none text-gray-700 dark:text-gray-200 text-sm lg:text-base lg:leading-8 pr-4 tracking-wide mt-2">
+                                                    {{$blog->description}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            {{ $blogs->links() }}
                         </div>
                     </div>
                 </div>
-            @endfor
+            </div>
         </section>
     </section>
 @endsection

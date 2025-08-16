@@ -53,11 +53,9 @@
                 class="fixed top-0 left-0 z-40 w-52 h-screen transition-transform -translate-x-full sm:translate-x-0"
                 aria-label="Sidebar">
                 <div class=" h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
-                    <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
-                        <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7"
-                            alt="Flowbite Logo" />
-                        <span
-                            class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+                    <a href="https://terremar.com/" class="flex items-center mb-5">
+                        <img src="{{ asset('storage/assets/terremar-horizontal.webp')}}" class="h-8 me-3 "
+                            alt="Terremar Logo" />
                     </a>
                     <ul class="space-y-2 font-medium">
                         <li>
@@ -91,7 +89,7 @@
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Asesores</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('blog.create') }}"
+                                    <a href="{{ route('dashboard.blog.create') }}"
                                         class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Blogs</a>
                                 </li>
                             </ul>
@@ -137,7 +135,7 @@
                                 <span class="flex-1 ms-3 whitespace-nowrap">Propietarios</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('faq') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
@@ -145,9 +143,9 @@
                                 fa-solid fa-circle-question fa-lg"></i>
                                 <span class="flex-1 ms-3 whitespace-nowrap">FAQ</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a href="{{ route('blog_dash') }}"
+                            <a href="{{ route('dashboard.blog.index') }}"
                                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <i
                                     class="flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white

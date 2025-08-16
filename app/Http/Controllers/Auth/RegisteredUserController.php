@@ -59,6 +59,7 @@ class RegisteredUserController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);
+                // dd("hola");
 
                 event(new Registered($user));
 
@@ -75,6 +76,6 @@ class RegisteredUserController extends Controller
         }
 
 
-        return redirect(route('advisor.create', absolute: false));
+        return redirect(route('dashboard.advisor.create', absolute: false));
     }
 }
