@@ -269,7 +269,6 @@ class PropertyController extends Controller
                 // 2. Buscar o crear la persona con los datos proporcionados
                 $owner = Person::updateOrCreate(
                     [
-                        'id' => $property->owner->id,
                         'identification' => $data['identification']
                     ],
                     [

@@ -35,24 +35,24 @@
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Titulo'" :name="'title'"
                                 value="{{ $property->title }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('title')" class="mt-2" />
+
                         </div>
 
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Tipo'" :name="'type'"
                                 value="{{ $property->type->name }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('type')" class="mt-2" />
+
                         </div>
 
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'number'" :placeholder="'Precio'" :name="'price'"
                                 value="{{ $property->price }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'number'" :placeholder="'Área'" :name="'area'"
                                 value="{{ $property->area }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('area')" class="mt-2" />
+
                         </div>
                     </div>
 
@@ -60,17 +60,17 @@
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'number'" :placeholder="'Habitaciones'" :name="'bedrooms'"
                                 value="{{ $property->bedrooms }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('bedrooms')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'number'" :placeholder="'Baños'" :name="'bathrooms'"
                                 value="{{ $property->bathrooms }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('bathrooms')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'number'" :placeholder="'Estacionamientos'" :name="'parkings'"
                                 value="{{ $property->parkings }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('parkings')" class="mt-2" />
+
                         </div>
                     </div>
 
@@ -78,12 +78,12 @@
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Clase'" :name="'social_class'"
                                 value="{{ $property->social_class }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('social_class')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Negocio'" :name="'trade'"
                                 value="{{ $property->trade->name }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('trade')" class="mt-2" />
+
                         </div>
                     </div>
                     <div class="relative z-0 w-full mb-4 group">
@@ -112,37 +112,37 @@
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'País'" :name="'country'"
                                 value="{{ $property->address->country }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('country')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Estado'" :name="'state'"
                                 value="{{ $property->address->state }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('state')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Municipio'" :name="'municipality'"
                                 value="{{ $property->address->municipality }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('municipality')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Parroquia'" :name="'parish'"
                                 value="{{ $property->address->city }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('parish')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group col-span-2">
                             <x-float-input :type="'text'" :placeholder="'Punto de Referencia'" :name="'point_reference'"
                                 value="{{ $property->address->point_reference }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('point_reference')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Latitud'" :name="'latitude'" :required="false"
                                 value="{{ $property->latitude }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('latitude')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Altitud'" :name="'longitude'" :required="false"
                                 value="{{ $property->longitude }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('longitude')" class="mt-2" />
+
                         </div>
                     </div>
                     <button type="button" @click="step = 2"
@@ -155,33 +155,33 @@
                     <div class="relative z-0 w-full mb-4 group">
                         <x-float-input :type="'text'" :placeholder="'Cédula'" :name="'identification'"
                             value="{{ $property->owner->identification }}"></x-float-input>
-                        <x-input-error :messages="$errors->get('identification')" class="mt-2" />
+
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Nombre'" :name="'name'"
                                 value="{{ $property->owner->name }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Apellido'" :name="'lastname'"
                                 value="{{ $property->owner->lastname }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'mail'" :placeholder="'Correo Electrónico'" :name="'email'"
                                 value="{{ $property->owner->email }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'tel'" :placeholder="'Télefono'" :name="'phone'"
                                 value="{{ $property->owner->phone }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Género'" :name="'gender'"
                                 value="{{ $property->owner->gender }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-date-picker :placeholder="'Fecha de Nacimiento'" :name="'birthdate'"
@@ -197,27 +197,27 @@
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'País'" :name="'ownerCountry'"
                                 value="{{ $property->owner->address->country }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('ownerCountry')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Estado'" :name="'ownerState'"
                                 value="{{ $property->owner->address->state }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('ownerState')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Municipio'" :name="'ownerMunicipality'"
                                 value="{{ $property->owner->address->municipality }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('ownerMunicipality')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group">
                             <x-float-input :type="'text'" :placeholder="'Parroquia'" :name="'ownerParish'"
                                 value="{{ $property->owner->address->city }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('ownerParish')" class="mt-2" />
+
                         </div>
                         <div class="relative z-0 w-full mb-4 group col-span-2">
                             <x-float-input :type="'text'" :placeholder="'Punto de Referencia'" :name="'ownerPoint_reference'"
                                 value="{{ $property->owner->address->point_reference }}"></x-float-input>
-                            <x-input-error :messages="$errors->get('ownerPoint_reference')" class="mt-2" />
+
                         </div>
                     </div>
 
@@ -286,9 +286,39 @@
                 </div>
 
                     <div class="relative z-0 w-full mb-4 group">
-                        <input
-                            class="block w-96 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            id="picture" name="uploadMedia[]" multiple accept="image/*,video/*" type="file">
+                            <input class="hidden" id="picture" name="uploadMedia[]" multiple accept="image/*,video/*" type="file" onchange="previewFilesEdit(event)">
+                            <label for="picture" class="flex flex-col items-center justify-center w-96 h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:border-blue-400 transition-colors">
+                                <i class="fa-solid fa-cloud-arrow-up text-blue-400 text-5xl mb-2"></i>
+                                <span class="text-gray-500 dark:text-gray-400">Haz click o arrastra archivos aquí</span>
+                                <span class="text-xs text-gray-400 mt-1">Imágenes o videos (máx. 5MB)</span>
+                            </label>
+                            <div id="previewEdit" class="flex flex-wrap gap-4 mt-4"></div>
+                            <x-input-error :messages="$errors->get('uploadMedia')" class="mt-2" />
+                            <script>
+                            function previewFilesEdit(event) {
+                                const preview = document.getElementById('previewEdit');
+                                preview.innerHTML = '';
+                                const files = event.target.files;
+                                Array.from(files).forEach(file => {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        if (file.type.startsWith('image/')) {
+                                            const img = document.createElement('img');
+                                            img.src = e.target.result;
+                                            img.className = 'w-32 h-32 object-cover rounded shadow';
+                                            preview.appendChild(img);
+                                        } else if (file.type.startsWith('video/')) {
+                                            const video = document.createElement('video');
+                                            video.src = e.target.result;
+                                            video.controls = true;
+                                            video.className = 'w-32 h-32 object-cover rounded shadow';
+                                            preview.appendChild(video);
+                                        }
+                                    };
+                                    reader.readAsDataURL(file);
+                                });
+                            }
+                            </script>
                     </div>
 
                     <button type="button" @click="step = 2"
@@ -302,7 +332,10 @@
         </form>
 
         @if (session('success'))
-            <x-modal-crud :color="'green'" :message="session('success')" />
+            <x-modal-crud :color="'blue'" :message="session('success')" />
+            <script src="{{ asset('js/custom/modal.js') }}"></script>
+        @elseif ($errors->any())
+            <x-modal-crud :color="'yellow'" :message="implode('<br>', $errors->all())" />
             <script src="{{ asset('js/custom/modal.js') }}"></script>
         @elseif (session('error'))
             <x-modal-crud :color="'red'" :message="session('error')" />

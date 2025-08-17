@@ -18,9 +18,21 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="p-4 md:p-5 text-center">
-                <i class="fa-regular fa-circle-check text-6xl mb-3 text-{{$color}}-400"></i>
-                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{{ $message }}
-                </h3>
+                @switch($color)
+                    @case('blue')
+                        <i class="fa-regular fa-circle-check text-6xl mb-3 text-blue-400"></i>
+                        @break
+                    @case('red')
+                        <i class="fa-solid fa-circle-xmark text-6xl mb-3 text-red-400"></i>
+                        @break
+                    @case('yellow')
+                        <i class="fa-solid fa-triangle-exclamation text-6xl mb-3 text-yellow-400"></i>
+                        @break
+                    @default
+                        <i class="fa-regular fa-circle-check text-6xl mb-3 text-blue-400"></i>
+                        @break
+                @endswitch
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">{!! $message !!}</h3>
                 <button data-modal-hide="popup-modal" type="button"
                     class="w-full flex justify-center font-bold text-white bg-{{$color}}-400 hover:bg-{{$color}}-600 focus:ring-4 focus:outline-none focus:ring-{{$color}}-700 dark:focus:ring-{{$color}}-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                     Continuar

@@ -22,6 +22,7 @@
         <input id="{{ $startName }}" name="{{ $startName }}" value="{{ $start_value ?? ''}}" type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="{{ $startHolder }}">
+        <x-input-error :messages="$errors->get($startName)" class="mt-2" />
     </div>
     <span class="mx-4 text-gray-500">Hasta</span>
     <div class="relative">
@@ -35,5 +36,6 @@
         <input id="{{ $endName }}" name="{{ $endName }}" value="{{ $end_value ?? ''}}" type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="{{ $endHolder }}">
+        <x-input-error :messages="$errors->get($endName)" class="mt-2" />
     </div>
 </div>

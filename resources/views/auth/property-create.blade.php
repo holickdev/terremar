@@ -211,7 +211,10 @@
 
 
         @if (session('success'))
-            <x-modal-crud :color="'green'" :message="session('success')" />
+            <x-modal-crud :color="'blue'" :message="session('success')" />
+            <script src="{{ asset('js/custom/modal.js') }}"></script>
+        @elseif ($errors->any())
+            <x-modal-crud :color="'yellow'" :message="implode('<br>', $errors->all())" />
             <script src="{{ asset('js/custom/modal.js') }}"></script>
         @elseif (session('error'))
             <x-modal-crud :color="'red'" :message="session('error')" />

@@ -22,9 +22,9 @@ class PropertyRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Obtén el ID del propietario actual
-        $ownerId = $this->property->owner->id ?? null;
-        // dd($this);
+        // Detecta si es update (existe property) o create (no existe property)
+        $isUpdate = isset($this->property);
+        $ownerId = $isUpdate ? ($this->property->owner->id ?? null) : null;
 
         return [
             'ownerCountry' => 'required|string|max:100',
@@ -35,20 +35,28 @@ class PropertyRequest extends FormRequest
             'name' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
             'birthdate' => 'required|date',
-            'identification' => [
-                'required',
-                'string',
-                'max:20',
-                Rule::unique('person', 'identification')->ignore($ownerId),
-            ],
+            'identification' => array_merge(
+                [
+                    'required',
+                    'string',
+                    'max:20',
+                ],
+                $isUpdate
+                    ? [Rule::unique('person', 'identification')->ignore($ownerId)]
+                    : []
+            ),
             'gender' => 'required|string|in:Masculino,Femenino,Otro',
             'phone' => 'required|string|max:20',
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('person', 'email')->ignore($ownerId),
-            ],
+            'email' => array_merge(
+                [
+                    'required',
+                    'email',
+                    'max:255',
+                ],
+                $isUpdate
+                    ? [Rule::unique('person', 'email')->ignore($ownerId)]
+                    : []
+            ),
             'country' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'municipality' => 'required|string|max:100',
